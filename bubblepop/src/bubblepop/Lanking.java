@@ -50,7 +50,7 @@ public class Lanking extends javax.swing.JFrame {
         jLabel4.setPreferredSize(new Dimension(122, 30));   
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BubblePop");
+        setTitle("BubblePop :: Ranking");
 
         jTabbedPane1.setMaximumSize(new java.awt.Dimension(100, 100));
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(100, 100));

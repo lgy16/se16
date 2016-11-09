@@ -40,7 +40,7 @@ public class Game extends javax.swing.JFrame {
         jEditorPane4 = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BubblePop");
+        setTitle("BubblePop :: Play");
 
         jEditorPane3.setEditable(false);
         jScrollPane3.setViewportView(jEditorPane3);
