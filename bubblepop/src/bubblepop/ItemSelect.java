@@ -1,5 +1,7 @@
 package bubblepop;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -50,8 +52,18 @@ public class ItemSelect extends javax.swing.JFrame {
         );
 
         jButton1.setText("취소");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("선택완료");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,7 +93,33 @@ public class ItemSelect extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>    
+    
+    //취소버튼 클릭
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       
+    	dispose(); //창을 닫는다
+    }                                        
+
+    //선택완료버튼 클릭
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
+    {                                         
+        
+    	int reply=JOptionPane.showConfirmDialog(this, "선택하신 아이템을 가지고 플레이하게 됩니다. 게임을 시작하시겠습니까?", null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if (reply == JOptionPane.YES_OPTION)
+		{
+			//게임 플레이 창으로 전환
+			Game frame = new Game();
+			frame.setResizable(false);
+			frame.setVisible(true);
+			dispose();
+	    }
+		else
+		{
+			//다시 선택
+	    }
+    }                     
 
     /**
      * @param args the command line arguments

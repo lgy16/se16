@@ -15,14 +15,17 @@ import javax.swing.JOptionPane;
  *
  * @author LGY
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame 
+{
 
     /**
      * Creates new form main
      */
 	
 	String level;	//하, 중, 상
-    public Main() {
+	
+    public Main() 
+    {
         initComponents();
     }
 
@@ -83,6 +86,24 @@ a     * This method is called from within the constructor to initialize the form
                 jToggleButton3ActionPerformed(evt);
             }
         });
+        
+/////////////////////////////////////////////////////////////////////////////////////////////////////        
+///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
+    	this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+    	this.addWindowListener(new java.awt.event.WindowAdapter() 
+    	{
+	        @Override
+	        public void windowClosing(java.awt.event.WindowEvent e) 
+	        {
+	        	 if (JOptionPane.showConfirmDialog(null, 
+	        	            "정말 게임을 종료하시겠습니까?", "Really Closing?", 
+	        	            JOptionPane.YES_NO_OPTION,
+	        	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+	        	            System.exit(0);
+	        	        }
+	        }
+	    });
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,6 +148,7 @@ a     * This method is called from within the constructor to initialize the form
         pack();
     }// </editor-fold>                        
 
+    
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
         //하
         jToggleButton2.setSelected(false);
@@ -214,7 +236,7 @@ a     * This method is called from within the constructor to initialize the form
         }
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -230,5 +252,6 @@ a     * This method is called from within the constructor to initialize the form
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
-    // End of variables declaration                   
+    // End of variables declaration     
+    
 }
