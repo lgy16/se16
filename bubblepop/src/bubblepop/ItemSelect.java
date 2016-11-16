@@ -32,7 +32,7 @@ public class ItemSelect extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);	//이 창을 끌 때 부모 frame이 함께 꺼지지 않게 한다.
         setTitle("Item Select");
         setAlwaysOnTop(true);
 

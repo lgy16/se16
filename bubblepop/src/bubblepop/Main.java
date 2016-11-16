@@ -1,5 +1,8 @@
 package bubblepop;
 
+import javax.swing.JOptionPane;
+
+
 /*
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,6 +20,8 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form main
      */
+	
+	String level;	//하, 중, 상
     public Main() {
         initComponents();
     }
@@ -41,9 +46,19 @@ a     * This method is called from within the constructor to initialize the form
         setTitle("BubblePop");
 
         jButton1.setText("시작");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("랭킹");
         jButton2.setToolTipText("");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("난이도 선택");
 
@@ -113,23 +128,65 @@ a     * This method is called from within the constructor to initialize the form
     }// </editor-fold>                        
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
+        //하
         jToggleButton2.setSelected(false);
     	jToggleButton3.setSelected(false);
+    	level="하";
     }                                              
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
+        //중
         jToggleButton1.setSelected(false);
     	jToggleButton3.setSelected(false);
+    	level="중";
     }                                              
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        // TODO add your handling code here:
+        //상
         jToggleButton1.setSelected(false);
     	jToggleButton2.setSelected(false);
+    	level="상";
     }                                              
 
+    //시작 버튼을 눌렀을 때
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
+    {   
+    	
+    	
+    	if(level==null)	//난이도가 선택되지 않은 경우
+    	{
+    		
+    		JOptionPane.showMessageDialog(this, "난이도를 먼저 선택해 주세요.", null, JOptionPane.WARNING_MESSAGE);
+    	}
+    	else	//난이도 선택 시
+    	{
+			String content = "선택하신 난이도는 \'" + level + "\' 입니다.";
+		    
+			int reply=JOptionPane.showConfirmDialog(this, content, "레벨 선택 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			
+			if (reply == JOptionPane.YES_OPTION)
+			{
+				//난이도 선택화면을 띄운다
+				ItemSelect frame = new ItemSelect();
+				frame.setResizable(false);
+				frame.setVisible(true);
+		    }
+			else
+			{
+				//다시 메인
+		    }
+    	}
+    }                                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                         
+        //랭킹 버튼을 눌렀을 때
+    	Ranking frame = new Ranking();
+    	frame.setResizable(false);
+    	frame.setVisible(true);
+    	dispose();
+    }                      
+    
     /**
      * @param args the command line arguments
      */

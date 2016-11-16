@@ -18,12 +18,12 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
  *
  * @author LGY
  */
-public class Lanking extends javax.swing.JFrame {
+public class Ranking extends javax.swing.JFrame {
 
     /**
      * Creates new form lanking
      */
-    public Lanking() {
+    public Ranking() {
         initComponents();
     }
 
@@ -148,12 +148,18 @@ public class Lanking extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {                                         
+    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt)
+    {                                         
         // TODO add your handling code here:
     }                                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                         
+        //닫기 버튼 클릭
+    	Main frame = new Main();
+    	frame.setResizable(false);
+    	frame.setVisible(true);
+    	dispose();
     }                                        
 
     /**
@@ -173,13 +179,13 @@ public class Lanking extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Lanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ranking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Lanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ranking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Lanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ranking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Lanking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ranking.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -187,7 +193,7 @@ public class Lanking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Lanking().setVisible(true);
+                new Ranking().setVisible(true);
             }
         });
     }
