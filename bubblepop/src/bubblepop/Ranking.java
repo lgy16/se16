@@ -2,6 +2,7 @@ package bubblepop;
 
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 
@@ -113,6 +114,22 @@ public class Ranking extends javax.swing.JFrame {
         jTabbedPane1.setTabComponentAt(1, jLabel3);  // tab index, jLabel
         jTabbedPane1.setTabComponentAt(2, jLabel4);  // tab index, jLabel
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////        
+///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
+        this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() 
+        {
+        	@Override
+        	public void windowClosing(java.awt.event.WindowEvent e) 
+        	{
+        		Main frame = new Main();
+            	frame.setResizable(false);
+            	frame.setVisible(true);
+            	dispose();	
+        	}	
+        });
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

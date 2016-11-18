@@ -1,5 +1,7 @@
 package bubblepop;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -67,6 +69,28 @@ public class Game extends javax.swing.JFrame {
         jEditorPane4.setEditable(false);
         jScrollPane4.setViewportView(jEditorPane4);
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////        
+///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
+        this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() 
+        {
+        	@Override
+        	public void windowClosing(java.awt.event.WindowEvent e) 		
+        	{
+        		if (JOptionPane.showConfirmDialog(null, 
+        	            "지금 게임을 중단하면 랭킹에 등록 할 수 없습니다. 게속하시겠습니까?", null, 
+        	            JOptionPane.YES_NO_OPTION,
+        	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+        	            Main frame = new Main();
+        	            frame.setResizable(false);
+                    	frame.setVisible(true);
+                    	dispose();	
+        	        }
+        	}	
+        });
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
