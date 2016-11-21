@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,41 +29,90 @@ import GameObject.MyActionLitener;
  */
 
 class GameObject extends JButton{
-	private int row, col;
-	public GameObject(int row, int col){
-		this.row = row;
-		this.col = col;
+	private final int NUM, COL;
+	public int imgNum;
+	public Image img;
+	
+	public GameObject(int num, int col){
+		this.NUM = num;
+		this.COL = col;
 		this.addActionListener(new MyActionLitener());
 	}
+	
+	public void setImage(int width, int height, int imgNum){
+		this.imgNum = imgNum;
+		try {
+			switch(imgNum){
+			case 0:
+				img = ImageIO.read(getClass().getResource("img/circle.png"));
+				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
+				break;
+			case 1:
+				img = ImageIO.read(getClass().getResource("img/square.png"));
+				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
+				break;
+			case 2:
+				img = ImageIO.read(getClass().getResource("img/star.png"));
+				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
+				break;
+			case 3:
+				img = ImageIO.read(getClass().getResource("img/triangle.png"));
+				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
+				break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println("w : " + width + " / " + this.getIcon().getIconWidth());
+	}
+	
+	public void selectObject(){
+		Game_Board.selectedObject = this;
+	}
+	
+	public void moveObject(){
+		//System.out.print("origin : " + imgNum);
+		int tmp = imgNum;
+		setImage(Game_Board.selectedObject.getIcon().getIconWidth(), Game_Board.selectedObject.getIcon().getIconHeight(), Game_Board.selectedObject.imgNum);
+		//System.out.println(" -> change : " + imgNum);
+		Game_Board.selectedObject.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
+		Game_Board.selectedObject = null;
+	}
+	
 	private class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			System.out.println("버튼클릭! : (" + row + ", " + col + ")");
+			System.out.println("버튼클릭! : (" + (NUM/COL + 1) + ", " + (NUM%COL + 1) + ")");
+			
+			if(Game_Board.selectedObject == null){
+				selectObject();
+			}
+			else{
+				moveObject();
+			}
 		}
 	}
 }
 
 class Game_Board extends JPanel{
 	private final int width, height;
-	private final int ROW = 8, COL = 6;
+	private final int ROW = 8, COL = 6, GAP = 5;
 	private GameObject gameObject[] = new GameObject[ROW*COL];
+	public static GameObject selectedObject;
+	
 	public Game_Board(int width, int height){
 		this.width = width;
 		this.height = height;
 		this.getPreferredSize();
 		this.setBackground(new Color(219,231,251));
-		this.setLayout(new GridLayout(ROW,COL, 5, 5	)); //가로갯수, 세로갯수, 가로 간격, 세로 간격 (집어넣는 갯수가 모자라면 이상하게 정렬되서 나옴)
+		this.setLayout(new GridLayout(ROW, COL, GAP, GAP)); //가로갯수, 세로갯수, 가로 간격, 세로 간격 (집어넣는 갯수가 모자라면 이상하게 정렬되서 나옴)
 		
+		//Create GameObject
 		for(int i = 0; i < ROW*COL; i++ ){
-			gameObject[i] = new GameObject(i/COL, i%COL);
-			try {
-				Image img = ImageIO.read(getClass().getResource("img/star.png"));
-				gameObject[i].setIcon(new ImageIcon(img.getScaledInstance(40,40,Image.SCALE_SMOOTH)));
-				this.add(gameObject[i]);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	
+			gameObject[i] = new GameObject(i, COL);
+			this.add(gameObject[i]);
+			Random random = new Random();
+			gameObject[i].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*9)%4);
+		}
 	}
 	@Override
 	public Dimension getPreferredSize(){
