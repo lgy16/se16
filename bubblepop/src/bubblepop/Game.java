@@ -1,6 +1,20 @@
 package bubblepop;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import GameObject.MyActionLitener;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,6 +26,50 @@ import javax.swing.JOptionPane;
  *
  * @author LGY
  */
+
+class GameObject extends JButton{
+	private int row, col;
+	public GameObject(int row, int col){
+		this.row = row;
+		this.col = col;
+		this.addActionListener(new MyActionLitener());
+	}
+	private class MyActionLitener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			System.out.println("버튼클릭! : (" + row + ", " + col + ")");
+		}
+	}
+}
+
+class Game_Board extends JPanel{
+	private final int width, height;
+	private final int ROW = 8, COL = 6;
+	private GameObject gameObject[] = new GameObject[ROW*COL];
+	public Game_Board(int width, int height){
+		this.width = width;
+		this.height = height;
+		this.getPreferredSize();
+		this.setBackground(new Color(219,231,251));
+		this.setLayout(new GridLayout(ROW,COL, 5, 5	)); //가로갯수, 세로갯수, 가로 간격, 세로 간격 (집어넣는 갯수가 모자라면 이상하게 정렬되서 나옴)
+		
+		for(int i = 0; i < ROW*COL; i++ ){
+			gameObject[i] = new GameObject(i/COL, i%COL);
+			try {
+				Image img = ImageIO.read(getClass().getResource("img/star.png"));
+				gameObject[i].setIcon(new ImageIcon(img.getScaledInstance(40,40,Image.SCALE_SMOOTH)));
+				this.add(gameObject[i]);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+	}
+	@Override
+	public Dimension getPreferredSize(){
+		return new Dimension(width, height);
+	}
+}
+
 public class Game extends javax.swing.JFrame {
 
     /**
