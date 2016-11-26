@@ -22,7 +22,7 @@ public class Main extends javax.swing.JFrame
      * Creates new form main
      */
 	
-	String level;	//하, 중, 상
+	public static String level;	//하, 중, 상
 	
     public Main() 
     {

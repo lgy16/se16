@@ -14,8 +14,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Label;
+import javax.swing.JLabel;
 
-import GameObject.MyActionLitener;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -146,8 +150,12 @@ public class Game extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jEditorPane4 = new javax.swing.JEditorPane();
+        levelLabel = new JLabel();
+        scoreLabel = new JLabel();
+        movecntLabel = new JLabel();
+        itempanel = new JPanel();
+        Main m = new Main();
+        ItemSelect item = new ItemSelect();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Play");
@@ -173,9 +181,11 @@ public class Game extends javax.swing.JFrame {
         jLabel3.setText("남은 횟수");
 
         jLabel4.setText("아이템");
-
-        jEditorPane4.setEditable(false);
-        jScrollPane4.setViewportView(jEditorPane4);
+        
+        //levelLabel.setText(m.level);
+        levelLabel.setText(m.level);
+        scoreLabel.setText("null");
+        movecntLabel.setText("null");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////        
 ///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
@@ -196,35 +206,118 @@ public class Game extends javax.swing.JFrame {
         	        }
         	}	
         });
+       
+        
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /********************/
+        if(item.item1 == true)
+        {
+        	iButton1 = new JButton("하나 지우기");
+        	iButton1.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			JOptionPane.showMessageDialog(null, "아이템 사용");
+        		}
+        	});
+        	itempanel.add(iButton1);
+        }
+        if(item.item2 == true)
+  	    { 
+        	iButton2 = new JButton("배열 재생성");
+  	  		iButton2.addActionListener(new ActionListener() {
+  	  			public void actionPerformed(ActionEvent e) {
+  	  				JOptionPane.showMessageDialog(null, "아이템 사용");
+  	  			}
+  	  		});
+  	  		itempanel.add(iButton2);
+  	    }
+        if(item.item3 == true)
+        {
+        	iButton3 = new JButton("이동회수 바꾸기");
+        	iButton3.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			JOptionPane.showMessageDialog(null, "아이템 사용");
+        		}
+        	});
+        	  
+        	itempanel.add(iButton3);
+        }
+        if(item.item4 == true)
+        {
+        	iButton4 = new JButton("힌트 보기");
+        	iButton4.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			JOptionPane.showMessageDialog(null, "아이템 사용");
+        		}
+        	});
+        	itempanel.add(iButton4);
+        }
+        if(item.item5 == true)
+        {
+        	iButton5 = new JButton("하나 바꾸기");
+        	iButton5.addActionListener(new ActionListener() {
+        		public void actionPerformed(ActionEvent e) {
+        			JOptionPane.showMessageDialog(null, "아이템 사용");
+        		}
+        	});
+        	itempanel.add(iButton5);
+        }
+        
+        /********************/
+        
+        
         
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel2Layout.createSequentialGroup()
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGap(36)
+        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
+        							.addGroup(jPanel2Layout.createSequentialGroup()
+        								.addComponent(jLabel3)
+        								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        								.addComponent(movecntLabel))
+        							.addGroup(jPanel2Layout.createSequentialGroup()
+        								.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+        								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        								.addComponent(scoreLabel))
+        							.addGroup(jPanel2Layout.createSequentialGroup()
+        								.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
+        								.addGap(29)
+        								.addComponent(levelLabel)))
+        						.addComponent(jLabel4)))
+        				.addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(itempanel, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)))
+        			.addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel2Layout.createSequentialGroup()
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel1)
+        				.addComponent(levelLabel))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel2)
+        				.addComponent(scoreLabel))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel3)
+        				.addComponent(movecntLabel))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jLabel4)
+        			.addGap(18)
+        			.addComponent(itempanel, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+        			.addContainerGap())
         );
+     
+        
+      
+       // }
+        jPanel2.setLayout(jPanel2Layout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,6 +339,8 @@ public class Game extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
+        
+        
 
         pack();
     }// </editor-fold>                        
@@ -288,7 +383,6 @@ public class Game extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JEditorPane jEditorPane3;
-    private javax.swing.JEditorPane jEditorPane4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -296,6 +390,15 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private JLabel levelLabel;
+    private JLabel scoreLabel;
+    private JLabel movecntLabel;
+    private JButton iButton1;
+    private JButton iButton2;
+    private JButton iButton3;
+    private JButton iButton4;
+    private JButton iButton5;
+    private JPanel itempanel;
+    
     // End of variables declaration                   
 }
