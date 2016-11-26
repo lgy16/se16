@@ -12,6 +12,11 @@ import java.util.StringTokenizer;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
+import javax.swing.JList;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.JScrollBar;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 
@@ -157,43 +162,67 @@ public class Ranking extends javax.swing.JFrame {
                 jTabbedPane1FocusGained(evt);
             }
         });
+        
+        JList list1 = new JList();
+        
+        scrollBar1 = new JScrollBar();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addComponent(list1, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(scrollBar1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollBar1, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+        		.addComponent(list1, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
+        jPanel1.setLayout(jPanel1Layout);
 
         jTabbedPane1.addTab("난이도 하", jPanel1);
+        
+        list2 = new JList();
+        
+        scrollBar2 = new JScrollBar();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        			.addComponent(list2, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(scrollBar2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollBar2, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+        		.addComponent(list2, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
         );
+        jPanel2.setLayout(jPanel2Layout);
 
         jTabbedPane1.addTab("난이도 중", jPanel2);
+        
+        list3 = new JList();
+        
+        scrollBar3 = new JScrollBar();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+        	jPanel3Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        			.addComponent(list3, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addComponent(scrollBar3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+        	jPanel3Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(scrollBar3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+        		.addComponent(list3, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
+        jPanel3.setLayout(jPanel3Layout);
 
         jTabbedPane1.addTab("난이도 상", jPanel3);
 
@@ -318,6 +347,11 @@ public class Ranking extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private JScrollBar scrollBar1;
+    private JList list2;
+    private JScrollBar scrollBar2;
+    private JList list3;
+    private JScrollBar scrollBar3;
     // End of variables declaration                   
 }
 

@@ -1,4 +1,9 @@
 package bubblepop;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import java.awt.event.ActionEvent;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,7 +34,17 @@ public class AddRanking extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton1.addActionListener(new java.awt.event.ActionListener() { //랭킹등록 버튼 클릭시
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		jButton1ActionPerformed(evt);
+        	}
+        });
         jButton2 = new javax.swing.JButton();
+        jButton2.addActionListener(new java.awt.event.ActionListener() { //등록안함 버튼 클릭시
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		jButton2ActionPerformed(evt);
+        	}
+        });
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -43,7 +58,7 @@ public class AddRanking extends javax.swing.JFrame {
         jButton2.setText("등록안함");
 
         jLabel1.setText(" 2016년 11월 2일 난이도 : 상 획득한 점수: 128점");
-
+        
         jLabel2.setText("랭킹에 등록하시려면 아래 빈칸에 닉네임을 입력해 주세요.");
 
         jLabel3.setText("닉네임");
@@ -89,8 +104,28 @@ public class AddRanking extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>          
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                         
+        //래킹등록 버튼 클릭
+    	JOptionPane.showMessageDialog(this, "등록되었습니다.", null, JOptionPane.INFORMATION_MESSAGE);
+    	
+    	Ranking frame = new Ranking();
+    	frame.setResizable(false);
+    	frame.setVisible(true);
+    	dispose();
+    }  
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                         
+        //등록안함 버튼 클릭
+    	Main frame = new Main();
+    	frame.setResizable(false);
+    	frame.setVisible(true);
+    	dispose();
+    }  
 
+    
+    
     /**
      * @param args the command line arguments
      */
