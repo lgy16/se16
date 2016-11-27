@@ -18,9 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import java.awt.Label;
 import javax.swing.JLabel;
-
 
 class GameObject extends JButton{
 	private Game_Board upper;
@@ -133,17 +133,18 @@ class Game_Board extends JPanel{
 		this.height = height;
 		this.getPreferredSize();//사이즈 설정
 		this.setBackground(new Color(219,231,251));
-		this.setLayout(new GridLayout(ROW, COL, GAP, GAP)); //가로갯수, 세로갯수, 가로 간격, 세로 간격 (집어넣는 갯수가 모자라면 이상하게 정렬되서 나옴)
+		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
       
 		//Create GameObject
 		for(int row = 0; row < ROW; row++){
 			for(int col = 0; col < COL; col++){
 				gameObject[row][col] = new GameObject(row, col, this);
 				this.add(gameObject[row][col]);
-				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+												random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
 			}
 		}
-		while(this.Check() == 0);
+		while(this.Check() == 0);//터지는게 없을 때까지 반복 체크
 	}
 	
 	@Override //패널 크기 지정
@@ -239,8 +240,8 @@ public class Game extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
+    	
+    	gameBoard = new Game_Board(375, 450);
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -257,14 +258,14 @@ public class Game extends javax.swing.JFrame {
         setTitle("BubblePop :: Play");
 
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        );
+        //javax.swing.GroupLayout gameBoardLayout = new javax.swing.GroupLayout(gameBoard);
+        //gameBoard.setLayout(gameBoardLayout);
+       // gameBoardLayout.setHorizontalGroup(
+       //     gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+       // );
+       // gameBoardLayout.setVerticalGroup(
+       //     gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+       // );
 
         jLabel1.setText("난이도 ");
 
@@ -417,7 +418,7 @@ public class Game extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(gameBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -427,7 +428,7 @@ public class Game extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gameBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -478,7 +479,7 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
+    private Game_Board gameBoard;
     private javax.swing.JPanel jPanel2;
     private JLabel levelLabel;
     private JLabel scoreLabel;
