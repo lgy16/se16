@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -17,72 +18,93 @@ import javax.swing.JPanel;
 
 import GameObject.MyActionLitener;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author LGY
- */
-
 class GameObject extends JButton{
-	private final int NUM, COL;
+	private Game_Board upper;
+	private final int ROW, COL;
 	public int imgNum;
-	public Image img;
-	
-	public GameObject(int num, int col){
-		this.NUM = num;
-		this.COL = col;
-		this.addActionListener(new MyActionLitener());
+   
+	public GameObject(int row, int col, Game_Board upper){
+	   this.upper = upper;
+	   this.ROW = row;
+	   this.COL = col;
+	   this.addActionListener(new MyActionLitener());
 	}
-	
+   
+	//이미지 주소 불러오기
+	String selectImage(String mod, int imgNum){
+		switch(mod){
+		case "set":
+			switch(imgNum){
+			case 0:
+				return "img/circle.png";
+			case 1:
+				return "img/triangle.png";
+			case 2:
+				return "img/square.png";
+			case 3:
+				return "img/star.png";
+			}
+	   case "select":
+		   switch(imgNum){
+		   case 0:
+			   return "img/selected_circle.png";
+		   case 1:
+			   return "img/selected_triangle.png";
+		   case 2:
+			   return "img/selected_square.png";
+		   case 3:
+			   return "img/selected_star.png";
+		   }		   
+		}
+		return "Fail";
+	}
+   
+	//이미지 셋팅하기
 	public void setImage(int width, int height, int imgNum){
 		this.imgNum = imgNum;
 		try {
-			switch(imgNum){
-			case 0:
-				img = ImageIO.read(getClass().getResource("img/circle.png"));
-				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-				break;
-			case 1:
-				img = ImageIO.read(getClass().getResource("img/square.png"));
-				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-				break;
-			case 2:
-				img = ImageIO.read(getClass().getResource("img/star.png"));
-				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-				break;
-			case 3:
-				img = ImageIO.read(getClass().getResource("img/triangle.png"));
-				this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-				break;
-			}
+			Image img = ImageIO.read(getClass().getResource(selectImage("set", imgNum)));
+			this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//System.out.println("w : " + width + " / " + this.getIcon().getIconWidth());
 	}
 	
+	//게임오브젝트 선택시 선택 이미지로 변경
 	public void selectObject(){
 		Game_Board.selectedObject = this;
+		try {
+			Image img = ImageIO.read(getClass().getResource(selectImage("select", imgNum)));
+			this.setIcon(new ImageIcon(img.getScaledInstance(this.getIcon().getIconWidth(),this.getIcon().getIconHeight(),Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
+   
+	//동서남북 체크 후 이동여부 결정
 	public void moveObject(){
-		//System.out.print("origin : " + imgNum);
-		int tmp = imgNum;
-		setImage(Game_Board.selectedObject.getIcon().getIconWidth(), Game_Board.selectedObject.getIcon().getIconHeight(), Game_Board.selectedObject.imgNum);
-		//System.out.println(" -> change : " + imgNum);
-		Game_Board.selectedObject.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
+		GameObject selected = Game_Board.selectedObject;
+		int N = this.ROW - 1;
+		int S = this.ROW + 1;
+		int W = this.COL - 1;
+		int E = this.COL + 1;
+		
+		if((selected.ROW == N && selected.COL == this.COL) || (selected.ROW == S && selected.COL == this.COL) || (selected.ROW == this.ROW && selected.COL == W) || (selected.ROW == this.ROW && selected.COL == E)){
+			int tmp = imgNum;
+			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
+			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
+		}
+		else{
+			selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
+		}
 		Game_Board.selectedObject = null;
+		
+		while(upper.Check() == 0);
 	}
-	
+   
+	//버튼 클릭 이벤트
 	private class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			System.out.println("버튼클릭! : (" + (NUM/COL + 1) + ", " + (NUM%COL + 1) + ")");
-			
 			if(Game_Board.selectedObject == null){
 				selectObject();
 			}
@@ -96,27 +118,103 @@ class GameObject extends JButton{
 class Game_Board extends JPanel{
 	private final int width, height;
 	private final int ROW = 8, COL = 6, GAP = 5;
-	private GameObject gameObject[] = new GameObject[ROW*COL];
-	public static GameObject selectedObject;
+	private Random random = new Random();
+	private Calendar oCalendar = Calendar.getInstance( );
 	
+	private GameObject gameObject[][] = new GameObject[ROW][COL];
+	public static GameObject selectedObject;
+   
 	public Game_Board(int width, int height){
 		this.width = width;
 		this.height = height;
-		this.getPreferredSize();
+		this.getPreferredSize();//사이즈 설정
 		this.setBackground(new Color(219,231,251));
 		this.setLayout(new GridLayout(ROW, COL, GAP, GAP)); //가로갯수, 세로갯수, 가로 간격, 세로 간격 (집어넣는 갯수가 모자라면 이상하게 정렬되서 나옴)
-		
+      
 		//Create GameObject
-		for(int i = 0; i < ROW*COL; i++ ){
-			gameObject[i] = new GameObject(i, COL);
-			this.add(gameObject[i]);
-			Random random = new Random();
-			gameObject[i].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*9)%4);
+		for(int row = 0; row < ROW; row++){
+			for(int col = 0; col < COL; col++){
+				gameObject[row][col] = new GameObject(row, col, this);
+				this.add(gameObject[row][col]);
+				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+			}
 		}
+		while(this.Check() == 0);
 	}
-	@Override
+	
+	@Override //패널 크기 지정
 	public Dimension getPreferredSize(){
 		return new Dimension(width, height);
+	}
+
+	//패널 전체 검사 후 스텍에 저장 -> 저장된 오브젝트의 이미지 변경
+	public int Check(){
+		GameObject checkedObject[] = new GameObject[ROW*COL];
+		int checkNum = 0, pointer, counter = 0;
+		
+		//horizon check
+		for(int row = 0; row < ROW; row++){
+			pointer = 0;
+			counter = 0;
+			for(int col = 0; col < COL; col++){
+				if(gameObject[row][pointer].imgNum != gameObject[row][col].imgNum){
+					if(counter >= 2){
+						for(int i = pointer; i < col; i++){
+							checkedObject[checkNum++] = gameObject[row][i];
+						}						
+					}
+					pointer = col;
+					counter = 0;
+				}
+				else{
+					counter++;
+				}
+			}//end of line
+			//last image check
+			if(counter >= 2){
+				for(int i = pointer; i < COL; i++){
+					checkedObject[checkNum++] = gameObject[row][i];
+				}						
+			}
+		}//end of horizon
+		
+		//vertical check
+		for(int col = 0; col < COL; col++){
+			pointer = 0;
+			counter = 0;
+			for(int row = 0; row < ROW; row++){
+				if(gameObject[pointer][col].imgNum != gameObject[row][col].imgNum){
+					if(counter >= 2){
+						for(int i = pointer; i < row; i++){
+							checkedObject[checkNum++] = gameObject[i][col];
+						}						
+					}
+					pointer = row;
+					counter = 0;
+				}
+				else{
+					counter++;
+				}
+			}//end of line
+			//last image check
+			if(counter >= 2){
+				for(int i = pointer; i < ROW; i++){
+					checkedObject[checkNum++] = gameObject[i][col];
+				}						
+			}
+		}
+		//end of vertical
+		
+
+		if(checkNum == 0){
+			return -1;
+		}
+		
+		//change
+		for(checkNum--; checkNum >= 0; checkNum--){
+			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+		}
+		return 0;
 	}
 }
 
