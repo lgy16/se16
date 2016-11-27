@@ -79,7 +79,9 @@ class GameObject extends JButton{
 		Game_Board.selectedObject = this;
 		try {
 			Image img = ImageIO.read(getClass().getResource(selectImage("select", imgNum)));
-			this.setIcon(new ImageIcon(img.getScaledInstance(this.getIcon().getIconWidth(),this.getIcon().getIconHeight(),Image.SCALE_SMOOTH)));
+			this.setIcon(new ImageIcon(img.getScaledInstance(this.getIcon().getIconWidth(),
+																this.getIcon().getIconHeight(),
+																Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -93,7 +95,8 @@ class GameObject extends JButton{
 		int W = this.COL - 1;
 		int E = this.COL + 1;
 		
-		if((selected.ROW == N && selected.COL == this.COL) || (selected.ROW == S && selected.COL == this.COL) || (selected.ROW == this.ROW && selected.COL == W) || (selected.ROW == this.ROW && selected.COL == E)){
+		if((selected.ROW == N && selected.COL == this.COL) || (selected.ROW == S && selected.COL == this.COL) 
+				|| (selected.ROW == this.ROW && selected.COL == W) || (selected.ROW == this.ROW && selected.COL == E)){
 			int tmp = imgNum;
 			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
 			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
@@ -217,11 +220,12 @@ class Game_Board extends JPanel{
 		
 		//change
 		for(checkNum--; checkNum >= 0; checkNum--){
-			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+												random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
 		}
 		return 0;
 	}
-}
+}	
 
 public class Game extends javax.swing.JFrame {
 
