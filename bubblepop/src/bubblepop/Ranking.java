@@ -12,11 +12,14 @@ import java.util.StringTokenizer;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JList;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.JScrollBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 
 
@@ -71,6 +74,7 @@ class RankingEntry{
 }
 
 class ShowRanking{
+	String[][] rinfo = new String[30][4];
 	public ShowRanking(String level) {
 		try{		
 			URL url = new URL("http://www.bublepop.esy.es/Show_Ranking/showRanking.php");
@@ -96,7 +100,7 @@ class ShowRanking{
             while ((str = reader.readLine()) != null) {
                 builder.append(str);
             }
-            Parsing(level, builder.toString(), "/");
+            rinfo = Parsing(level, builder.toString(), "/");
             http.disconnect();
 		}
 		catch(Exception e){
@@ -107,16 +111,28 @@ class ShowRanking{
 		}
 	}
 	
-	void Parsing(String level, String text, String token){
+	String[][] Parsing(String level, String text, String token){
+		String [][] rankinginfo = new String[30][4];
+		int i = 0;
 		StringTokenizer str = new StringTokenizer(text, token);
 		System.out.println("State : " + str.nextToken());
 		System.out.println("----------------------------");
 		while(str.hasMoreTokens()){
-			System.out.println("Name : " + str.nextToken());
-			System.out.println("Tiem : " + str.nextToken());
-			System.out.println("Score : " + str.nextToken());
-			System.out.println("----------------------------");
+			rankinginfo[i][0]= String.valueOf(i+1);
+			for(int j=1; j<4; j++){
+				rankinginfo[i][j]= str.nextToken();
+			}
+			i++;
+			//System.out.println("Name : " + str.nextToken());
+			//System.out.println("Tiem : " + str.nextToken());
+			//System.out.println("Score : " + str.nextToken());
+			//System.out.println("----------------------------");
 		}
+		return rankinginfo;
+	}	
+	
+	String[][] getRankingInfo(){
+		return rinfo;
 	}
 }
 
@@ -163,65 +179,69 @@ public class Ranking extends javax.swing.JFrame {
             }
         });
         
-        JList list1 = new JList();
-        
-        scrollBar1 = new JScrollBar();
+        scrollPane1 = new JScrollPane();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addComponent(list1, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollBar1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        		.addComponent(scrollPane1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollBar1, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-        		.addComponent(list1, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+        		.addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
+        
+        //난이도 하 테이블에 랭킹 뿌려주기
+        String[] col = {"Ranking", "Name", "Time", "Score"};
+        ShowRanking sr1 = new ShowRanking("low");
+        DefaultTableModel model1 = new DefaultTableModel(sr1.getRankingInfo(),col);
+        
+        table1 = new JTable(model1);
+        scrollPane1.setViewportView(table1);
         jPanel1.setLayout(jPanel1Layout);
 
         jTabbedPane1.addTab("난이도 하", jPanel1);
         
-        list2 = new JList();
-        
-        scrollBar2 = new JScrollBar();
+        scrollPane2 = new JScrollPane();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2Layout.setHorizontalGroup(
-        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-        			.addComponent(list2, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(scrollBar2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        	jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        		.addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
         	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollBar2, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-        		.addComponent(list2, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+        		.addComponent(scrollPane2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
+        
+        //난이도 중 테이블에 랭킹 뿌려주기
+        ShowRanking sr2 = new ShowRanking("middle");
+        DefaultTableModel model2 = new DefaultTableModel(sr2.getRankingInfo(),col);        
+        
+        table2 = new JTable(model2);
+        scrollPane2.setViewportView(table2);
         jPanel2.setLayout(jPanel2Layout);
 
         jTabbedPane1.addTab("난이도 중", jPanel2);
         
-        list3 = new JList();
-        
-        scrollBar3 = new JScrollBar();
+        JScrollPane scrollPane3 = new JScrollPane();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3Layout.setHorizontalGroup(
-        	jPanel3Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-        			.addComponent(list3, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        			.addComponent(scrollBar3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        	jPanel3Layout.createParallelGroup(Alignment.TRAILING)
+        		.addComponent(scrollPane3, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
         	jPanel3Layout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(scrollBar3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-        		.addComponent(list3, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+        		.addComponent(scrollPane3, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
+        
+        //난이도 상 테이블에 랭킹 뿌려주기        
+        ShowRanking sr3 = new ShowRanking("high");
+        DefaultTableModel model3 = new DefaultTableModel(sr3.getRankingInfo(),col);
+        
+        table3 = new JTable(model3);
+        scrollPane3.setViewportView(table3);
         jPanel3.setLayout(jPanel3Layout);
 
         jTabbedPane1.addTab("난이도 상", jPanel3);
@@ -347,11 +367,11 @@ public class Ranking extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private JScrollBar scrollBar1;
-    private JList list2;
-    private JScrollBar scrollBar2;
-    private JList list3;
-    private JScrollBar scrollBar3;
+    private JScrollPane scrollPane1;
+    private JTable table1;
+    private JScrollPane scrollPane2;
+    private JTable table2;
+    private JTable table3;
     // End of variables declaration                   
 }
 
