@@ -3,6 +3,8 @@ package bubblepop;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,6 +35,9 @@ import javax.swing.SwingConstants;
  */
 public class ItemSelect extends javax.swing.JFrame {
 
+    int selectcnt = 0;
+    int count = 0;
+    Item_list i_list = new Item_list();
     /**
      * Creates new form ItemSelect
      */
@@ -54,9 +59,7 @@ public class ItemSelect extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        int selectcnt = 0;
         int how_many_items = 5;	
-    	Item_list i_list = new Item_list();
     	JToggleButton[] item_buttons=new javax.swing.JToggleButton[how_many_items];
         
     	jPanel1.setLayout(new GridLayout(how_many_items, 1, 0, 0));
@@ -85,8 +88,8 @@ public class ItemSelect extends javax.swing.JFrame {
     		selectcnt = 5;
         /******************/
         
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        	
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        			
         setTitle("Item Select");
         setAlwaysOnTop(true);
         setMaximumSize(new java.awt.Dimension(320, 350));
@@ -112,6 +115,138 @@ public class ItemSelect extends javax.swing.JFrame {
             }
         });
 
+/////////////////////////////////////////////////////////////////////
+///////////////////////아이템버튼 액션리스너///////////////////////////////
+        item_buttons[0].addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		System.out.println(" ");
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			System.out.println("button0 is selected");
+        			if(count>=selectcnt)
+        			{
+        				item_buttons[0].setSelected(false);
+        			}
+        			count++;
+        			i_list.set_seelcted(0, true);
+    				System.out.println(count);
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			System.out.println("button0 is not selected");
+        			count--;
+        			i_list.set_seelcted(0, false);
+        			System.out.println(count);
+        		}
+		   }
+		});
+        item_buttons[1].addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		System.out.println(" ");
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			System.out.println("button1 is selected");
+        			if(count>=selectcnt)
+        			{
+        				item_buttons[1].setSelected(false);
+        			}
+        			count++;
+        			i_list.set_seelcted(1, true);
+    				System.out.println(count);
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			System.out.println("button1 is not selected");
+        			count--;
+        			i_list.set_seelcted(1, false);
+        			System.out.println(count);
+        		}
+		   }
+		});
+        item_buttons[2].addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		System.out.println(" ");
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			System.out.println("button2 is selected");
+        			
+        			if(count>=selectcnt)
+        			{
+        				
+        				item_buttons[2].setSelected(false);
+        			}
+        			count++;
+        			i_list.set_seelcted(2, true);
+    				System.out.println(count);
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			System.out.println("button2 is not selected");
+        			count--;
+        			i_list.set_seelcted(2, false);
+        			System.out.println(count);
+        		}
+		   }
+		});
+        item_buttons[3].addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		System.out.println(" ");
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			System.out.println("button3 is selected");
+        			if(count>=selectcnt)
+        			{
+        				item_buttons[3].setSelected(false);
+        			}
+        			count++;
+        			i_list.set_seelcted(3, true);
+    				System.out.println(count);
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			System.out.println("button3 is not selected");
+        			count--;
+        			i_list.set_seelcted(3, false);
+        			System.out.println(count);
+        		}
+		   }
+		});
+        item_buttons[4].addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		System.out.println(" ");
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			System.out.println("button4 is selected");
+        			if(count>=selectcnt)
+        			{
+        				item_buttons[4].setSelected(false);
+        			}
+        			count++;
+        			i_list.set_seelcted(4, true);
+    				System.out.println(count);
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			System.out.println("button4 is not selected");
+        			count--;
+        			i_list.set_seelcted(4, false);
+        			System.out.println(count);
+        		}
+		   }
+		});
+///////////////////////////////////////////////////////////////////
+	 
+     
         jLabel1.setText("난이도 \'" + Main.level + "\' 에서 선택 가능한 아이템 개수는 " + selectcnt + "개 입니다." );
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setMaximumSize(new java.awt.Dimension(300, 30));
@@ -185,17 +320,12 @@ public class ItemSelect extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+  
 
     //취소버튼 클릭
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    	/****/
-		//cnt = 0;
-		//item1=false;
-		//item2=false;
-		//item3=false;
-		//item4=false;
-		//item5=false;
-		/***/
+    	i_list.reset_state();
+    	count=0;
     	dispose(); //창을 닫는다
     }                                        
 
@@ -208,24 +338,18 @@ public class ItemSelect extends javax.swing.JFrame {
 		if (reply == JOptionPane.YES_OPTION)
 		{
 			//게임 플레이 창으로 전환
-			Game frame = new Game();
+			Game frame = new Game(i_list);
 			frame.setResizable(false);
 			frame.setVisible(true);
-			/****/
-			//cnt = 0;
-			//item1=false;
-			//item2=false;
-			//item3=false;
-			//item4=false;
-			//item5=false;
-			/***/
+			count=0;		
 			dispose();
 	    }
 		else
 		{
 			//다시 선택
 	    }
-    }               
+    }         
+    
 
     /**
      * @param args the command line arguments

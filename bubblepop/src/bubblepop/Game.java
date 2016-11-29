@@ -227,12 +227,24 @@ class Game_Board extends JPanel{
 	}
 }	
 
+
+
+
+////////////Game 화면
 public class Game extends javax.swing.JFrame {
 
+	private Item_list i_list;
     /**
      * Creates new form game
      */
-    public Game() {
+    public Game()
+    {
+        initComponents();
+    }
+    
+    public Game(Item_list list)
+    {
+    	i_list=list;
         initComponents();
     }
 
@@ -255,8 +267,6 @@ public class Game extends javax.swing.JFrame {
         scoreLabel = new JLabel();
         movecntLabel = new JLabel();
         itempanel = new JPanel();
-        Main m = new Main();
-        ItemSelect item = new ItemSelect();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Play");
@@ -280,7 +290,7 @@ public class Game extends javax.swing.JFrame {
         jLabel4.setText("아이템");
         
         //levelLabel.setText(m.level);
-        levelLabel.setText(m.level);
+        levelLabel.setText(Main.level);
         scoreLabel.setText("null");
         movecntLabel.setText("null");
 

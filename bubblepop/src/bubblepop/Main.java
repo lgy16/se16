@@ -47,7 +47,7 @@ a     * This method is called from within the constructor to initialize the form
         jToggleButton3 = new javax.swing.JToggleButton();
 
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop");
 
         jButton1.setText("¥Ÿ¿Ω");

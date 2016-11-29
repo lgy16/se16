@@ -8,6 +8,7 @@ class Item_list
 	private Item[] item_list = new Item[how_many_items];
 	public ImageIcon[] item_icon = new ImageIcon[how_many_items];
 	public String[] item_name = new String[how_many_items];
+	private Boolean[] item_selected = new Boolean[how_many_items];
 	
 	public Item_list()
 	{
@@ -21,6 +22,25 @@ class Item_list
 		{
 			item_icon[i] = new ImageIcon(getClass().getResource(item_list[i].get_item_ico()));
 			item_name[i] = item_list[i].get_item_name();
+			item_selected[i] = false;
 		}
+	}
+	
+	public void reset_state()
+	{
+		for(int i=0; i<how_many_items; i++)
+		{
+			item_selected[i]=false;
+		}
+	}
+	
+	public void set_seelcted(int number, Boolean state)
+	{
+		item_selected[number] = state;
+	}
+	
+	public Boolean get_selected(int number)
+	{
+		return item_selected[number];
 	}
 }
