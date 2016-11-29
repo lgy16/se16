@@ -23,6 +23,7 @@ public class Main extends javax.swing.JFrame
      */
 	
 	public static String level;	//하, 중, 상
+    ItemSelect it_s;
 	
     public Main() 
     {
@@ -44,6 +45,7 @@ a     * This method is called from within the constructor to initialize the form
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop");
@@ -170,7 +172,7 @@ a     * This method is called from within the constructor to initialize the form
     	level="상";
     }                                              
 
-    //시작 버튼을 눌렀을 때
+    //다음 버튼을 눌렀을 때
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
     {   
     	
@@ -189,9 +191,13 @@ a     * This method is called from within the constructor to initialize the form
 			if (reply == JOptionPane.YES_OPTION)
 			{
 				//난이도 선택화면을 띄운다
+				/*
 				ItemSelect frame = new ItemSelect();
 				frame.setResizable(false);
 				frame.setVisible(true);
+				*/
+				
+				it_s.main(null);
 		    }
 			else
 			{

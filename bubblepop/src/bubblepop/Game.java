@@ -307,6 +307,7 @@ public class Game extends javax.swing.JFrame {
         
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
         /********************/
+        /*
         if(item.item1 == true)
         {
         	iButton1 = new JButton("하나 지우기");
@@ -358,6 +359,7 @@ public class Game extends javax.swing.JFrame {
         	});
         	itempanel.add(iButton5);
         }
+        */
         
         /********************/
         
