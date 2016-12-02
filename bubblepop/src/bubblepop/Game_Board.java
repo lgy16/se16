@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 class Game_Board extends JPanel{
+	protected Sound sound;
 	private final int width, height;
 	private final int ROW = 8, COL = 6, GAP = 5;
 	private Random random = new Random();
@@ -18,6 +19,7 @@ class Game_Board extends JPanel{
 	public static GameObject selectedObject;
    
 	public Game_Board(int width, int height){
+		sound = new Sound();
 		this.width = width;
 		this.height = height;
 		this.getPreferredSize();//사이즈 설정
@@ -99,16 +101,21 @@ class Game_Board extends JPanel{
 		}
 		//end of vertical
 		
-
 		if(checkNum == 0){
 			return -1;
 		}
-		
+
 		//change
 		for(checkNum--; checkNum >= 0; checkNum--){
-			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-												random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
 		}
+		
+//		try {
+//			Thread.sleep(800);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		return 0;
 	}
-}	
+}

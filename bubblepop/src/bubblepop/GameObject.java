@@ -102,8 +102,8 @@ class GameObject extends JButton{
 	private class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(Game_Board.selectedObject == null){
+				upper.sound.ClickSound();
 				selectObject();
-				//Sound gs = new Sound("c://Coin.wav");
 			}
 			else{
 				moveObject();

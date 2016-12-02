@@ -1,31 +1,35 @@
 package bubblepop;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import sun.audio.*;
 
-public class Sound {
-	File fio;
-	public Sound(String dir){
-		fio = new File(dir);
-		this.start();
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+class Sound {
+	File sound_Click;
+	AudioInputStream audioInputStream;
+	Clip clip;
+	
+	public Sound(){
+		sound_Click = new File("bin/sound/Coin.wav");
 	}
-	public void start(){
-		try{
-		    //File wf = new File("c:/Coin.wav");
-			FileInputStream fis = new FileInputStream(fio);
-			AudioStream as = new AudioStream(fis);
-			AudioPlayer.player.start(as);
-			System.out.print("소리 출력");
-			
-		}catch(FileNotFoundException e){
+	
+	public void ClickSound(){
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(sound_Click.getAbsoluteFile());
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
-			System.out.println("파일 찾기 실패");
-		}catch(IOException e){
-			System.out.println("오디오스트림에서 실패");
+		} catch (LineUnavailableException | IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		clip.start();
+		System.out.print("클릭 소리 출력");
 	}
 }
