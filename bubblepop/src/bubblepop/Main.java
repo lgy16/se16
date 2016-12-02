@@ -49,6 +49,7 @@ a     * This method is called from within the constructor to initialize the form
 
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop");
+        setResizable(false);
 
         jButton1.setText("¥Ÿ¿Ω");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

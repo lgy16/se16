@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 /*
@@ -51,6 +52,9 @@ public class AddRanking extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        
         setTitle("BubblePop :: ·©Å·µî·Ï");
 
         jButton1.setText("·©Å·µî·Ï");

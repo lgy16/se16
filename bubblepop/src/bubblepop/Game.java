@@ -22,214 +22,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Label;
 import javax.swing.JLabel;
 
-class GameObject extends JButton{
-	private Game_Board upper;
-	private final int ROW, COL;
-	public int imgNum;
-   
-	public GameObject(int row, int col, Game_Board upper){
-	   this.upper = upper;
-	   this.ROW = row;
-	   this.COL = col;
-	   this.addActionListener(new MyActionLitener());
-	}
-   
-	//이미지 주소 불러오기
-	String selectImage(String mod, int imgNum){
-		switch(mod){
-		case "set":
-			switch(imgNum){
-			case 0:
-				return "img/circle.png";
-			case 1:
-				return "img/triangle.png";
-			case 2:
-				return "img/square.png";
-			case 3:
-				return "img/star.png";
-			}
-	   case "select":
-		   switch(imgNum){
-		   case 0:
-			   return "img/selected_circle.png";
-		   case 1:
-			   return "img/selected_triangle.png";
-		   case 2:
-			   return "img/selected_square.png";
-		   case 3:
-			   return "img/selected_star.png";
-		   }		   
-		}
-		return "Fail";
-	}
-   
-	//이미지 셋팅하기
-	public void setImage(int width, int height, int imgNum){
-		this.imgNum = imgNum;
-		try {
-			Image img = ImageIO.read(getClass().getResource(selectImage("set", imgNum)));
-			this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//게임오브젝트 선택시 선택 이미지로 변경
-	public void selectObject(){
-		Game_Board.selectedObject = this;
-		try {
-			Image img = ImageIO.read(getClass().getResource(selectImage("select", imgNum)));
-			this.setIcon(new ImageIcon(img.getScaledInstance(this.getIcon().getIconWidth(),
-																this.getIcon().getIconHeight(),
-																Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-   
-	//동서남북 체크 후 이동여부 결정
-	public void moveObject(){
-		GameObject selected = Game_Board.selectedObject;
-		int N = this.ROW - 1;
-		int S = this.ROW + 1;
-		int W = this.COL - 1;
-		int E = this.COL + 1;
-		
-		if((selected.ROW == N && selected.COL == this.COL) || (selected.ROW == S && selected.COL == this.COL) 
-				|| (selected.ROW == this.ROW && selected.COL == W) || (selected.ROW == this.ROW && selected.COL == E)){
-			int tmp = imgNum;
-			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
-		}
-		else{
-			selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-		}
-		Game_Board.selectedObject = null;
-		
-		while(upper.Check() == 0);
-	}
-   
-	//버튼 클릭 이벤트
-	private class MyActionLitener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			if(Game_Board.selectedObject == null){
-				selectObject();
-				//Sound gs = new Sound("c://Coin.wav");
-			}
-			else{
-				moveObject();
-			}
-		}
-	}
-}
-
-class Game_Board extends JPanel{
-	private final int width, height;
-	private final int ROW = 8, COL = 6, GAP = 5;
-	private Random random = new Random();
-	private Calendar oCalendar = Calendar.getInstance( );
-	
-	private GameObject gameObject[][] = new GameObject[ROW][COL];
-	public static GameObject selectedObject;
-   
-	public Game_Board(int width, int height){
-		this.width = width;
-		this.height = height;
-		this.getPreferredSize();//사이즈 설정
-		this.setBackground(new Color(219,231,251));
-		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
-      
-		//Create GameObject
-		for(int row = 0; row < ROW; row++){
-			for(int col = 0; col < COL; col++){
-				gameObject[row][col] = new GameObject(row, col, this);
-				this.add(gameObject[row][col]);
-				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-												random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
-			}
-		}
-		while(this.Check() == 0);//터지는게 없을 때까지 반복 체크
-	}
-	
-	@Override //패널 크기 지정
-	public Dimension getPreferredSize(){
-		return new Dimension(width, height);
-	}
-
-	//패널 전체 검사 후 스텍에 저장 -> 저장된 오브젝트의 이미지 변경
-	public int Check(){
-		GameObject checkedObject[] = new GameObject[ROW*COL];
-		int checkNum = 0, pointer, counter = 0;
-		
-		//horizon check
-		for(int row = 0; row < ROW; row++){
-			pointer = 0;
-			counter = 0;
-			for(int col = 0; col < COL; col++){
-				if(gameObject[row][pointer].imgNum != gameObject[row][col].imgNum){
-					if(counter >= 2){
-						for(int i = pointer; i < col; i++){
-							checkedObject[checkNum++] = gameObject[row][i];
-						}						
-					}
-					pointer = col;
-					counter = 0;
-				}
-				else{
-					counter++;
-				}
-			}//end of line
-			//last image check
-			if(counter >= 2){
-				for(int i = pointer; i < COL; i++){
-					checkedObject[checkNum++] = gameObject[row][i];
-				}						
-			}
-		}//end of horizon
-		
-		//vertical check
-		for(int col = 0; col < COL; col++){
-			pointer = 0;
-			counter = 0;
-			for(int row = 0; row < ROW; row++){
-				if(gameObject[pointer][col].imgNum != gameObject[row][col].imgNum){
-					if(counter >= 2){
-						for(int i = pointer; i < row; i++){
-							checkedObject[checkNum++] = gameObject[i][col];
-						}						
-					}
-					pointer = row;
-					counter = 0;
-				}
-				else{
-					counter++;
-				}
-			}//end of line
-			//last image check
-			if(counter >= 2){
-				for(int i = pointer; i < ROW; i++){
-					checkedObject[checkNum++] = gameObject[i][col];
-				}						
-			}
-		}
-		//end of vertical
-		
-
-		if(checkNum == 0){
-			return -1;
-		}
-		
-		//change
-		for(checkNum--; checkNum >= 0; checkNum--){
-			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-												random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
-		}
-		return 0;
-	}
-}	
-
-
-
 
 ////////////Game 화면
 public class Game extends javax.swing.JFrame {
@@ -259,37 +51,72 @@ public class Game extends javax.swing.JFrame {
     private void initComponents() {
     	
     	gameBoard = new Game_Board(375, 450);
-        jPanel2 = new javax.swing.JPanel();
+ 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         levelLabel = new JLabel();
         scoreLabel = new JLabel();
         movecntLabel = new JLabel();
-        itempanel = new JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Play");
+        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(400, 580));
+        setMinimumSize(new java.awt.Dimension(400, 580));
+        setPreferredSize(new java.awt.Dimension(400, 580));
 
-
-        //javax.swing.GroupLayout gameBoardLayout = new javax.swing.GroupLayout(gameBoard);
-        //gameBoard.setLayout(gameBoardLayout);
-       // gameBoardLayout.setHorizontalGroup(
-       //     gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-       // );
-       // gameBoardLayout.setVerticalGroup(
-       //     gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-       // );
-
+        javax.swing.GroupLayout gameBoardLayout = new javax.swing.GroupLayout(gameBoard);
+        gameBoard.setLayout(gameBoardLayout);
+        gameBoardLayout.setHorizontalGroup(
+        		gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        		.addGap(0,0, Short.MAX_VALUE)
+        		);
+        gameBoardLayout.setVerticalGroup(
+        		gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        		.addGap(0, 0, Short.MAX_VALUE)
+                );
+        
         jLabel1.setText("난이도 ");
 
         jLabel2.setText("점수");
 
         jLabel3.setText("남은 횟수");
 
-        jLabel4.setText("아이템");
+        //jLabel4.setText("아이템");
         
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(gameBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(56, 56, 56))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gameBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
+            		
         //levelLabel.setText(m.level);
         levelLabel.setText(Main.level);
         scoreLabel.setText("null");
@@ -374,83 +201,6 @@ public class Game extends javax.swing.JFrame {
         
         /********************/
         
-        
-        
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2Layout.setHorizontalGroup(
-        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel2Layout.createSequentialGroup()
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(jPanel2Layout.createSequentialGroup()
-        					.addGap(36)
-        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
-        							.addGroup(jPanel2Layout.createSequentialGroup()
-        								.addComponent(jLabel3)
-        								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        								.addComponent(movecntLabel))
-        							.addGroup(jPanel2Layout.createSequentialGroup()
-        								.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-        								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        								.addComponent(scoreLabel))
-        							.addGroup(jPanel2Layout.createSequentialGroup()
-        								.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
-        								.addGap(29)
-        								.addComponent(levelLabel)))
-        						.addComponent(jLabel4)))
-        				.addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-        					.addContainerGap()
-        					.addComponent(itempanel, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)))
-        			.addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel2Layout.createSequentialGroup()
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel1)
-        				.addComponent(levelLabel))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel2)
-        				.addComponent(scoreLabel))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(jLabel3)
-        				.addComponent(movecntLabel))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(jLabel4)
-        			.addGap(18)
-        			.addComponent(itempanel, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-        			.addContainerGap())
-        );
-     
-        
-      
-       // }
-        jPanel2.setLayout(jPanel2Layout);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(gameBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(gameBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        
-        
 
         pack();
     }// </editor-fold>                        
@@ -495,18 +245,18 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    //private javax.swing.JLabel jLabel4;
     private Game_Board gameBoard;
     private javax.swing.JPanel jPanel2;
     private JLabel levelLabel;
     private JLabel scoreLabel;
     private JLabel movecntLabel;
-    private JButton iButton1;
-    private JButton iButton2;
-    private JButton iButton3;
-    private JButton iButton4;
-    private JButton iButton5;
-    private JPanel itempanel;
+   // private JButton iButton1;
+    //private JButton iButton2;
+    //private JButton iButton3;
+    //private JButton iButton4;
+    //private JButton iButton5;
+    //private JPanel itempanel;
     
     // End of variables declaration                   
 }

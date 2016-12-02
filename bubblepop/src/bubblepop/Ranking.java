@@ -165,7 +165,8 @@ public class Ranking extends javax.swing.JFrame {
         JLabel jLabel4 = new javax.swing.JLabel("난이도 상", JLabel.CENTER);
         jLabel2.setPreferredSize(new Dimension(122, 30));
         jLabel3.setPreferredSize(new Dimension(122, 30));
-        jLabel4.setPreferredSize(new Dimension(122, 30));   
+        jLabel4.setPreferredSize(new Dimension(122, 30));
+        setResizable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Ranking");
