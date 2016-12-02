@@ -1,25 +1,7 @@
 package bubblepop;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Random;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import java.awt.Label;
 import javax.swing.JLabel;
 
 
@@ -27,6 +9,7 @@ import javax.swing.JLabel;
 public class Game extends javax.swing.JFrame {
 
 	private Item_list i_list;
+	private Game_Info game_info;
     /**
      * Creates new form game
      */
@@ -35,8 +18,9 @@ public class Game extends javax.swing.JFrame {
         initComponents();
     }
     
-    public Game(Item_list list)
+    public Game(Item_list list, Game_Info g_info)
     {
+    	game_info=g_info;
     	i_list=list;
         initComponents();
     }
@@ -51,76 +35,118 @@ public class Game extends javax.swing.JFrame {
     private void initComponents() {
     	
     	gameBoard = new Game_Board(375, 450);
- 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         levelLabel = new JLabel();
         scoreLabel = new JLabel();
         movecntLabel = new JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Play");
         setResizable(false);
-        setMaximumSize(new java.awt.Dimension(400, 580));
-        setMinimumSize(new java.awt.Dimension(400, 580));
-        setPreferredSize(new java.awt.Dimension(400, 580));
+        setMaximumSize(new java.awt.Dimension(400, 650));
+        setMinimumSize(new java.awt.Dimension(400, 650));
+        setPreferredSize(new java.awt.Dimension(400, 650));
 
-        javax.swing.GroupLayout gameBoardLayout = new javax.swing.GroupLayout(gameBoard);
-        gameBoard.setLayout(gameBoardLayout);
-        gameBoardLayout.setHorizontalGroup(
-        		gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        		.addGap(0,0, Short.MAX_VALUE)
-        		);
-        gameBoardLayout.setVerticalGroup(
-        		gameBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        		.addGap(0, 0, Short.MAX_VALUE)
-                );
+        jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
+        jLabel2.setPreferredSize(new java.awt.Dimension(30, 30));
+        jLabel3.setPreferredSize(new java.awt.Dimension(30, 30));
+        
+        jPanel2.setPreferredSize(new java.awt.Dimension(375, 100));
+        jPanel2.setMinimumSize(new java.awt.Dimension(375, 100));
+        jPanel2.setMaximumSize(new java.awt.Dimension(375, 100));
         
         jLabel1.setText("난이도 ");
 
         jLabel2.setText("점수");
 
         jLabel3.setText("남은 횟수");
-
-        //jLabel4.setText("아이템");
+        
+        
+        levelLabel.setText(game_info.get_game_level());
+        scoreLabel.setText(String.valueOf(game_info.get_game_score()));
+        movecntLabel.setText(String.valueOf(game_info.get_move_count()));
+        System.out.println(game_info.get_game_level() + "\t" + game_info.get_game_score() + "\t" + game_info.get_move_count());
+        
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+           .addGap(0, 56, Short.MAX_VALUE)
+        );
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
+        layout.setHorizontalGroup
+        (
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(gameBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(56, 56, 56))))
+            .addGroup
+            (
+            		layout.createSequentialGroup()
+            		.addContainerGap()
+            		.addGroup
+            		(
+	                		layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                		.addGroup
+	                		(
+	                				layout.createSequentialGroup()
+	                				.addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addGap(18, 18, 18)
+			                        .addComponent(levelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addGap(18, 18, 18)
+			                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+			                        .addComponent(scoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addGap(18, 18, 18)
+			                        .addComponent(jLabel3)
+			                        .addGap(56, 56, 56)
+			                        .addComponent(movecntLabel,  javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+			                        .addGap(18, 18, 18)
+	                        )
+	                		.addGroup
+	                		(
+		                    		javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+		                    		.addGroup
+		                    		(
+		                    				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+		                    				.addComponent(jPanel2, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		                    				.addComponent(gameBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(12, 12, 12)
+		                    		)
+		                    		.addContainerGap()
+		                    )
+            		)
+               )
         );
-        layout.setVerticalGroup(
+        layout.setVerticalGroup
+        (
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gameBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+            .addGroup
+            (
+            		javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            		.addContainerGap()
+            		.addGroup
+            		(
+            				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            				.addComponent(jLabel1)
+            				.addComponent(levelLabel)
+            				.addComponent(jLabel2)
+            				.addComponent(scoreLabel)
+            				.addComponent(jLabel3)
+            				.addComponent(movecntLabel)
+            		)
+            		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            		.addComponent(gameBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            		.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE)//.PREFERRED_SIZE)
+            		.addContainerGap()
+            )
         );
-
-            		
-        //levelLabel.setText(m.level);
-        levelLabel.setText(Main.level);
-        scoreLabel.setText("null");
-        movecntLabel.setText("null");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////        
 ///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
@@ -245,18 +271,11 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    //private javax.swing.JLabel jLabel4;
     private Game_Board gameBoard;
     private javax.swing.JPanel jPanel2;
     private JLabel levelLabel;
     private JLabel scoreLabel;
     private JLabel movecntLabel;
-   // private JButton iButton1;
-    //private JButton iButton2;
-    //private JButton iButton3;
-    //private JButton iButton4;
-    //private JButton iButton5;
-    //private JPanel itempanel;
     
     // End of variables declaration                   
 }

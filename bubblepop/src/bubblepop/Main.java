@@ -192,13 +192,13 @@ a     * This method is called from within the constructor to initialize the form
 			if (reply == JOptionPane.YES_OPTION)
 			{
 				//난이도 선택화면을 띄운다
-				/*
-				ItemSelect frame = new ItemSelect();
+				//it_s.main();
+		
+				Game_Info game_info=new Game_Info(level);
+				
+				ItemSelect frame = new ItemSelect(game_info, this);
 				frame.setResizable(false);
 				frame.setVisible(true);
-				*/
-				
-				it_s.main(null);
 		    }
 			else
 			{
@@ -241,7 +241,6 @@ a     * This method is called from within the constructor to initialize the form
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
         
         /* Create and display the form */

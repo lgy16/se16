@@ -10,13 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
-
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,14 +28,33 @@ import javax.swing.SwingConstants;
  */
 public class ItemSelect extends javax.swing.JFrame {
 
-    int selectcnt = 0;
-    int count = 0;
-    Item_list i_list = new Item_list();
+    private int selectcnt = 0;
+    private int count = 0;
+    private Item_list i_list = new Item_list();
+    private String level;
+    private Game_Info game_info;
+    private Main m;
     /**
      * Creates new form ItemSelect
      */
     public ItemSelect() {
     				
+        initComponents();
+    }
+    
+    public ItemSelect (Game_Info g_info, Main m)
+    {
+    	game_info=g_info;
+    	this.m=m;
+    	level = game_info.get_game_level();
+
+        if(level == "상")
+        	selectcnt = 3;
+    	else if(level == "중")
+    		selectcnt = 4;
+    	else if(level == "하")
+    		selectcnt = 5;
+        
         initComponents();
     }
 
@@ -78,15 +90,6 @@ public class ItemSelect extends javax.swing.JFrame {
 			jPanel1.add(item_buttons[i]); //jPanel1에 버튼을 추가
 		}		
 		jScrollPane1 = new JScrollPane(jPanel1);                  	
-
-        /******************/
-        if(Main.level == "상")
-        	selectcnt = 3;
-    	else if(Main.level == "중")
-    		selectcnt = 4;
-    	else if(Main.level == "하")
-    		selectcnt = 5;
-        /******************/
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         			
@@ -338,11 +341,13 @@ public class ItemSelect extends javax.swing.JFrame {
 		if (reply == JOptionPane.YES_OPTION)
 		{
 			//게임 플레이 창으로 전환
-			Game frame = new Game(i_list);
+			Game frame = new Game(i_list, game_info);
 			frame.setResizable(false);
 			frame.setVisible(true);
 			count=0;		
 			dispose();
+			m.dispose();
+			
 	    }
 		else
 		{
