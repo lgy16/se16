@@ -114,7 +114,7 @@ class GameObject extends JButton{
 		public void actionPerformed(ActionEvent e){
 			if(Game_Board.selectedObject == null){
 				selectObject();
-				Sound gs = new Sound("c://Coin.wav");
+				//Sound gs = new Sound("c://Coin.wav");
 			}
 			else{
 				moveObject();
