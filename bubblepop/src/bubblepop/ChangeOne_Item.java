@@ -25,6 +25,6 @@ public class ChangeOne_Item extends Item
 	
 	public void item_use()
 	{
-		
+		System.out.println("GhangeOne_Item_use");
 	}
 }

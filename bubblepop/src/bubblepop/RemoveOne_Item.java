@@ -25,6 +25,6 @@ public class RemoveOne_Item extends Item
 	
 	public void item_use()
 	{
-		
+		System.out.println("RemoveOne_Item_use");
 	}
 }

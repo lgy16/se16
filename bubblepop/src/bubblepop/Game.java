@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 ////////////Game 화면
 public class Game extends javax.swing.JFrame {
 	private Item_list i_list;
+	private Item[] ex_items;
 	private int count;
 	protected Sound sound;
 	protected Game_Info game_info;
@@ -53,6 +54,7 @@ public class Game extends javax.swing.JFrame {
         movecntLabel = new JLabel();
         jPanel2 = new javax.swing.JPanel();
         ex_item_buttons = new javax.swing.JButton[5];
+        ex_items = new Item[count];
         
     	sound = new Sound();    	
     	gameBoard = new Game_Board(375, 450, this);
@@ -95,6 +97,7 @@ public class Game extends javax.swing.JFrame {
 	    			j++;
 	    		}
 				ex_item_buttons[i] = new javax.swing.JButton(i_list.item_icon[j]);
+				ex_items[i] = i_list.get_item(j);
 				j++;
         	}
         	else
@@ -104,6 +107,7 @@ public class Game extends javax.swing.JFrame {
         	ex_item_buttons[i].setPreferredSize(new java.awt.Dimension(50, 50));
         	ex_item_buttons[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);	
         	ex_item_buttons[i].setOpaque(true);
+        	
         	if(i>=count)
         	{
         		ex_item_buttons[i].setVisible(false);
@@ -213,6 +217,54 @@ public class Game extends javax.swing.JFrame {
         	    }
         	}	
         });
+       
+		
+		if(count > 0)
+		{
+		    ex_item_buttons[0].addActionListener(new java.awt.event.ActionListener() {
+		        public void actionPerformed(java.awt.event.ActionEvent evt) {
+		        	ex_items[0].item_use();
+		        	//나중에 다시못쓰는 코드 추가할 것
+		        }
+		    });
+		    
+		    if(count > 1)
+		    {
+			    ex_item_buttons[1].addActionListener(new java.awt.event.ActionListener() {
+			        public void actionPerformed(java.awt.event.ActionEvent evt) {
+			        	ex_items[1].item_use();
+			        }
+			    });
+			    
+			    if(count > 2)
+			    {
+			    	ex_item_buttons[2].addActionListener(new java.awt.event.ActionListener() {
+			    		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			    			ex_items[2].item_use();
+			    		}
+			    	});
+			    	
+			    	if(count > 3)
+			    	{	
+			    		ex_item_buttons[3].addActionListener(new java.awt.event.ActionListener() {
+				    		public void actionPerformed(java.awt.event.ActionEvent evt) {
+				    			ex_items[3].item_use();
+				    		}
+				    	});
+			    		
+			    		if(count > 4)
+			    		{
+			    			ex_item_buttons[4].addActionListener(new java.awt.event.ActionListener() {
+					    		public void actionPerformed(java.awt.event.ActionEvent evt) {
+					    			ex_items[4].item_use();
+					    		}
+					    	});
+			    		}
+			    	}
+			    }
+		    }
+		}
+        
        
         
 

@@ -24,6 +24,6 @@ public class AllReset_Item extends Item
 	}
 	public void item_use()
 	{
-		
+		System.out.println("AllReset_Item_use");
 	}
 }

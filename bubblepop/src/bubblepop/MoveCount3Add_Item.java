@@ -24,6 +24,6 @@ public class MoveCount3Add_Item extends Item
 	
 	public void item_use()
 	{
-		
+		System.out.println("MoveCount3Add_Item_use");
 	}
 }

@@ -43,4 +43,9 @@ class Item_list
 	{
 		return item_selected[number];
 	}
+	
+	public Item get_item(int index)
+	{
+		return item_list[index];
+	}
 }

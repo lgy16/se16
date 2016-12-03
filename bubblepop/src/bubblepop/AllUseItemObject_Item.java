@@ -25,6 +25,6 @@ public class AllUseItemObject_Item extends Item
 	
 	public void item_use()
 	{
-		
+		System.out.println("AllUseItemObject_Item_use");
 	}
 }
