@@ -84,9 +84,23 @@ public class Game extends javax.swing.JFrame {
         //System.out.println(game_info.get_game_level() + "\t" + game_info.get_game_score() + "\t" + game_info.get_move_count());
         
         jPanel2.setLayout(new GridLayout(1, 5, 24, 24));
-        for(int i=0; i<5; i++)
+        for(int i=0, j=0; i<5; i++)
         {
-        	ex_item_buttons[i] = new javax.swing.JButton(i_list.item_icon[i]);
+        	if(j<=4)
+        	{
+	        	System.out.println("i = " + i + ",\t j = " + j);
+
+	    		while(!i_list.get_selected(j))
+	    		{
+	    			j++;
+	    		}
+				ex_item_buttons[i] = new javax.swing.JButton(i_list.item_icon[j]);
+				j++;
+        	}
+        	else
+        	{
+        		ex_item_buttons[i] = new javax.swing.JButton();
+        	}
         	ex_item_buttons[i].setPreferredSize(new java.awt.Dimension(50, 50));
         	ex_item_buttons[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);	
         	ex_item_buttons[i].setOpaque(true);
@@ -94,7 +108,7 @@ public class Game extends javax.swing.JFrame {
         	{
         		ex_item_buttons[i].setVisible(false);
         	}
-        	jPanel2.add(ex_item_buttons[i]); //jPanel1에 버튼을 추가  	
+        	jPanel2.add(ex_item_buttons[i]); //jPanel1에 버튼을 추가  	        	
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(getContentPane());
