@@ -6,8 +6,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
-
-
 class Sound {
 	private String filename = "sound/Coin.wav";
 	

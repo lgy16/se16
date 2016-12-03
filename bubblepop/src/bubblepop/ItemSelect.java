@@ -72,7 +72,7 @@ public class ItemSelect extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         int how_many_items = 5;	
-    	JToggleButton[] item_buttons=new javax.swing.JToggleButton[how_many_items];
+    	item_buttons=new javax.swing.JToggleButton[how_many_items];
         
     	jPanel1.setLayout(new GridLayout(how_many_items, 1, 0, 0));
     	jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15 , 15 , 15 , 15));
@@ -132,8 +132,8 @@ public class ItemSelect extends javax.swing.JFrame {
         			{
         				item_buttons[0].setSelected(false);
         			}
+        			else i_list.set_seelcted(0, true);
         			count++;
-        			i_list.set_seelcted(0, true);
     				System.out.println(count);
     			}
         		else if(ev.getStateChange()==ItemEvent.DESELECTED)
@@ -157,8 +157,8 @@ public class ItemSelect extends javax.swing.JFrame {
         			{
         				item_buttons[1].setSelected(false);
         			}
+        			else i_list.set_seelcted(1, true);
         			count++;
-        			i_list.set_seelcted(1, true);
     				System.out.println(count);
     			}
         		else if(ev.getStateChange()==ItemEvent.DESELECTED)
@@ -184,8 +184,8 @@ public class ItemSelect extends javax.swing.JFrame {
         				
         				item_buttons[2].setSelected(false);
         			}
+        			else i_list.set_seelcted(2, true);
         			count++;
-        			i_list.set_seelcted(2, true);
     				System.out.println(count);
     			}
         		else if(ev.getStateChange()==ItemEvent.DESELECTED)
@@ -209,8 +209,8 @@ public class ItemSelect extends javax.swing.JFrame {
         			{
         				item_buttons[3].setSelected(false);
         			}
+        			else i_list.set_seelcted(3, true);
         			count++;
-        			i_list.set_seelcted(3, true);
     				System.out.println(count);
     			}
         		else if(ev.getStateChange()==ItemEvent.DESELECTED)
@@ -234,8 +234,8 @@ public class ItemSelect extends javax.swing.JFrame {
         			{
         				item_buttons[4].setSelected(false);
         			}
-        			count++;
-        			i_list.set_seelcted(4, true);
+        			else i_list.set_seelcted(4, true);
+        			count++;        			
     				System.out.println(count);
     			}
         		else if(ev.getStateChange()==ItemEvent.DESELECTED)
@@ -341,7 +341,7 @@ public class ItemSelect extends javax.swing.JFrame {
 		if (reply == JOptionPane.YES_OPTION)
 		{
 			//게임 플레이 창으로 전환
-			Game frame = new Game(i_list, game_info);
+			Game frame = new Game(i_list, game_info, count);
 			frame.setResizable(false);
 			frame.setVisible(true);
 			count=0;		
@@ -399,5 +399,6 @@ public class ItemSelect extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton[] item_buttons;
     // End of variables declaration//GEN-END:variables
 }

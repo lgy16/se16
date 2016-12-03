@@ -2,6 +2,10 @@ package bubblepop;
 
 
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
+
+import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 
 
@@ -10,6 +14,7 @@ public class Game extends javax.swing.JFrame {
 
 	private Item_list i_list;
 	private Game_Info game_info;
+	private int count;
     /**
      * Creates new form game
      */
@@ -18,8 +23,9 @@ public class Game extends javax.swing.JFrame {
         initComponents();
     }
     
-    public Game(Item_list list, Game_Info g_info)
+    public Game(Item_list list, Game_Info g_info, int cnt)
     {
+    	count=cnt;
     	game_info=g_info;
     	i_list=list;
         initComponents();
@@ -42,43 +48,61 @@ public class Game extends javax.swing.JFrame {
         scoreLabel = new JLabel();
         movecntLabel = new JLabel();
         jPanel2 = new javax.swing.JPanel();
+        ex_item_buttons = new javax.swing.JButton[5];
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Play");
         setResizable(false);
-        setMaximumSize(new java.awt.Dimension(400, 650));
-        setMinimumSize(new java.awt.Dimension(400, 650));
-        setPreferredSize(new java.awt.Dimension(400, 650));
+        setMaximumSize(new java.awt.Dimension(400, 660));
+        setMinimumSize(new java.awt.Dimension(400, 660));
+        setPreferredSize(new java.awt.Dimension(400, 660));
 
         jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
         jLabel2.setPreferredSize(new java.awt.Dimension(30, 30));
         jLabel3.setPreferredSize(new java.awt.Dimension(30, 30));
         
-        jPanel2.setPreferredSize(new java.awt.Dimension(375, 100));
-        jPanel2.setMinimumSize(new java.awt.Dimension(375, 100));
-        jPanel2.setMaximumSize(new java.awt.Dimension(375, 100));
+        jPanel2.setPreferredSize(new java.awt.Dimension(375, 50));
+        jPanel2.setMinimumSize(new java.awt.Dimension(375, 50));
+        jPanel2.setMaximumSize(new java.awt.Dimension(375, 50));
         
         jLabel1.setText("난이도 ");
 
         jLabel2.setText("점수");
 
         jLabel3.setText("남은 횟수");
-        
-        
+           
         levelLabel.setText(game_info.get_game_level());
         scoreLabel.setText(String.valueOf(game_info.get_game_score()));
         movecntLabel.setText(String.valueOf(game_info.get_move_count()));
         System.out.println(game_info.get_game_level() + "\t" + game_info.get_game_score() + "\t" + game_info.get_move_count());
         
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
+        jPanel2.setLayout(new GridLayout(1, 5, 24, 24));
+        for(int i=0; i<5; i++)
+        {
+        	ex_item_buttons[i] = new javax.swing.JButton(i_list.item_icon[i]);
+        	ex_item_buttons[i].setPreferredSize(new java.awt.Dimension(50, 50));
+        	ex_item_buttons[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);	
+        	ex_item_buttons[i].setOpaque(true);
+        	if(i>=count)
+        	{
+        		ex_item_buttons[i].setVisible(false);
+        	}
+        	jPanel2.add(ex_item_buttons[i]); //jPanel1에 버튼을 추가  	
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(20, 20, 20)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+            		.addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-           .addGap(0, 56, Short.MAX_VALUE)
+           .addGap(0, 0, 0)
+           .addGroup(jPanel2Layout.createSequentialGroup()
+        		   .addContainerGap())
         );
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -142,8 +166,8 @@ public class Game extends javax.swing.JFrame {
             		)
             		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             		.addComponent(gameBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            		.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE)//.PREFERRED_SIZE)
+            		.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, 8)// javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            		.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE)
             		.addContainerGap()
             )
         );
@@ -169,64 +193,7 @@ public class Game extends javax.swing.JFrame {
         });
        
         
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-        /********************/
-        /*
-        if(item.item1 == true)
-        {
-        	iButton1 = new JButton("하나 지우기");
-        	iButton1.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
-        			JOptionPane.showMessageDialog(null, "아이템 사용");
-        		}
-        	});
-        	itempanel.add(iButton1);
-        }
-        if(item.item2 == true)
-  	    { 
-        	iButton2 = new JButton("배열 재생성");
-  	  		iButton2.addActionListener(new ActionListener() {
-  	  			public void actionPerformed(ActionEvent e) {
-  	  				JOptionPane.showMessageDialog(null, "아이템 사용");
-  	  			}
-  	  		});
-  	  		itempanel.add(iButton2);
-  	    }
-        if(item.item3 == true)
-        {
-        	iButton3 = new JButton("이동회수 바꾸기");
-        	iButton3.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
-        			JOptionPane.showMessageDialog(null, "아이템 사용");
-        		}
-        	});
-        	  
-        	itempanel.add(iButton3);
-        }
-        if(item.item4 == true)
-        {
-        	iButton4 = new JButton("힌트 보기");
-        	iButton4.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
-        			JOptionPane.showMessageDialog(null, "아이템 사용");
-        		}
-        	});
-        	itempanel.add(iButton4);
-        }
-        if(item.item5 == true)
-        {
-        	iButton5 = new JButton("하나 바꾸기");
-        	iButton5.addActionListener(new ActionListener() {
-        		public void actionPerformed(ActionEvent e) {
-        			JOptionPane.showMessageDialog(null, "아이템 사용");
-        		}
-        	});
-        	itempanel.add(iButton5);
-        }
-        */
-        
-        /********************/
-        
+
 
         pack();
     }// </editor-fold>                        
@@ -276,6 +243,7 @@ public class Game extends javax.swing.JFrame {
     private JLabel levelLabel;
     private JLabel scoreLabel;
     private JLabel movecntLabel;
+    private javax.swing.JButton[] ex_item_buttons;
     
     // End of variables declaration                   
 }
