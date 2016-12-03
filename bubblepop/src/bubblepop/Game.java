@@ -73,8 +73,8 @@ public class Game extends javax.swing.JFrame {
            
         levelLabel.setText(game_info.get_game_level());
         scoreLabel.setText(String.valueOf(game_info.get_game_score()));
-        movecntLabel.setText(String.valueOf(game_info.get_move_count()));
-        System.out.println(game_info.get_game_level() + "\t" + game_info.get_game_score() + "\t" + game_info.get_move_count());
+        movecntLabel.setText(String.valueOf(game_info.get_move_count(0)));
+        //System.out.println(game_info.get_game_level() + "\t" + game_info.get_game_score() + "\t" + game_info.get_move_count());
         
         jPanel2.setLayout(new GridLayout(1, 5, 24, 24));
         for(int i=0; i<5; i++)
