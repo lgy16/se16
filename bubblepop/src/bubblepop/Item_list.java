@@ -41,6 +41,7 @@ class Item_list
 	
 	public Boolean get_selected(int number)
 	{
+		
 		return item_selected[number];
 	}
 	

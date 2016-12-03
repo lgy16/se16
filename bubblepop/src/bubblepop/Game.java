@@ -88,14 +88,15 @@ public class Game extends javax.swing.JFrame {
         jPanel2.setLayout(new GridLayout(1, 5, 24, 24));
         for(int i=0, j=0; i<5; i++)
         {
-        	if(j<=4)
+        	if(j<=(count-1))
         	{
-	        	System.out.println("i = " + i + ",\t j = " + j);
-
+	        	
 	    		while(!i_list.get_selected(j))
 	    		{
 	    			j++;
 	    		}
+	    		System.out.println("i = " + i + ",\t j = " + j);
+
 				ex_item_buttons[i] = new javax.swing.JButton(i_list.item_icon[j]);
 				ex_items[i] = i_list.get_item(j);
 				j++;
