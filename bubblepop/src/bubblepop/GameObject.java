@@ -117,13 +117,15 @@ class GameObject extends JButton{
 	//버튼 클릭 이벤트
 	private class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			if(Game_Board.selectedObject == null){
-				upper.upper.sound.startSound("select");
-				selectObject();
-			}
-			else{
-				moveObject();
-			}
+			if(upper.upper.game_info.get_move_count() > 0){
+				if(Game_Board.selectedObject == null){
+					upper.upper.sound.startSound("select");
+					selectObject();
+				}
+				else{
+					moveObject();
+				}
+			}			
 		}
 	}
 }
