@@ -97,22 +97,24 @@ class GameObject extends JButton{
 			int tmp = imgNum;
 			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
 			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
-			upper.upper.sound.startSound("move",0);
+			upper.upper.sound.startSound("move");
+			upper.upper.game_info.minus_move_count(1);
+			upper.upper.movecntLabel.setText(String.valueOf(upper.upper.game_info.get_move_count()));
 		}
 		else{
 			selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-			upper.upper.sound.startSound("click_error",0);
+			upper.upper.sound.startSound("click_error");
 		}
 		Game_Board.selectedObject = null;
 		
-		while(upper.Check() == 0);
+		while(upper.Check() > 0);
 	}
    
 	//버튼 클릭 이벤트
 	private class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(Game_Board.selectedObject == null){
-				upper.upper.sound.startSound("select",0);
+				upper.upper.sound.startSound("select");
 				selectObject();
 			}
 			else{

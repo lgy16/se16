@@ -25,7 +25,7 @@ class Game_Board extends JPanel{
 		this.getPreferredSize();//사이즈 설정
 		this.setBackground(new Color(219,231,251));
 		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
-		upper.sound.startSound("bgm",99);
+		upper.sound.startSound("bgm");
 		
 		//Create GameObject
 		for(int row = 0; row < ROW; row++){
@@ -36,7 +36,7 @@ class Game_Board extends JPanel{
 						random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 			}
 		}
-		while(this.Check() == 0);//터지는게 없을 때까지 반복 체크
+		while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
 	}
 	
 	@Override //패널 크기 지정
@@ -99,25 +99,18 @@ class Game_Board extends JPanel{
 					checkedObject[checkNum++] = gameObject[i][col];
 				}						
 			}
-		}
-		//end of vertical
-		
-		if(checkNum == 0){
-			return -1;
-		}
+		}//end of vertical
 
+		//label update
+		upper.game_info.plus_game_score(checkNum * 10);
+		upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
+		
 		//change
-		for(checkNum--; checkNum >= 0; checkNum--){
-			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2,
+		for(int i = checkNum-1 ; i >= 0; i--){
+			checkedObject[i].setImage(width/COL - GAP*2, height/ROW - GAP*2,
 					random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 		}
 		
-//		try {
-//			Thread.sleep(800);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		return 0;
+		return checkNum;
 	}
 }

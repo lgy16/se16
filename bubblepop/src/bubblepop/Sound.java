@@ -68,28 +68,25 @@ class Sound {
 		}
 	}
 
-	public void startSound(String call,int countNum){
+	public void startSound(String call){
 		try{
 			switch(call){
 			case "bgm":
 				bgmClip.open(AudioSystem.getAudioInputStream(bgmFile));
 				bgmClip.start();
-				bgmClip.loop(countNum);
+				bgmClip.loop(99);
 				break;
 			case "move":
 				moveSoundClip.open(AudioSystem.getAudioInputStream(moveSoundFile));
 				moveSoundClip.start();
-				moveSoundClip.loop(countNum);
 				break;
 			case "click_error":
 				cantMoveSoundClip.open(AudioSystem.getAudioInputStream(cantMoveSoundFile));
 				cantMoveSoundClip.start();
-				cantMoveSoundClip.loop(countNum);
 				break;
 			case "select":
 				selectuButtonClip.open(AudioSystem.getAudioInputStream(selectButtonSoundFile));
 				selectuButtonClip.start();
-				selectuButtonClip.loop(countNum);
 				break;
 			}
 		} catch(Exception e){

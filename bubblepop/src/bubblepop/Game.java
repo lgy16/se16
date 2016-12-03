@@ -11,10 +11,10 @@ import javax.swing.JLabel;
 
 ////////////Game È­¸é
 public class Game extends javax.swing.JFrame {
-	protected Sound sound;
 	private Item_list i_list;
-	private Game_Info game_info;
 	private int count;
+	protected Sound sound;
+	protected Game_Info game_info;
     /**
      * Creates new form game
      */
@@ -39,8 +39,6 @@ public class Game extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-    	sound = new Sound();    	
-    	gameBoard = new Game_Board(375, 450, this);
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -49,6 +47,9 @@ public class Game extends javax.swing.JFrame {
         movecntLabel = new JLabel();
         jPanel2 = new javax.swing.JPanel();
         ex_item_buttons = new javax.swing.JButton[5];
+        
+    	sound = new Sound();    	
+    	gameBoard = new Game_Board(375, 450, this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop :: Play");
@@ -73,7 +74,7 @@ public class Game extends javax.swing.JFrame {
            
         levelLabel.setText(game_info.get_game_level());
         scoreLabel.setText(String.valueOf(game_info.get_game_score()));
-        movecntLabel.setText(String.valueOf(game_info.get_move_count(0)));
+        movecntLabel.setText(String.valueOf(game_info.get_move_count()));
         //System.out.println(game_info.get_game_level() + "\t" + game_info.get_game_score() + "\t" + game_info.get_move_count());
         
         jPanel2.setLayout(new GridLayout(1, 5, 24, 24));
@@ -242,8 +243,8 @@ public class Game extends javax.swing.JFrame {
     private Game_Board gameBoard;
     private javax.swing.JPanel jPanel2;
     private JLabel levelLabel;
-    private JLabel scoreLabel;
-    private JLabel movecntLabel;
+    protected JLabel scoreLabel;
+    protected JLabel movecntLabel;
     private javax.swing.JButton[] ex_item_buttons;
     
     // End of variables declaration                   

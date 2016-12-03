@@ -34,11 +34,26 @@ public class Game_Info {
 	
 	public void set_game_score(int score)
 	{
-		game_score =+ score;
+		game_score = score;
+	}
+	
+	public void plus_game_score(int score)
+	{
+		game_score += score;
 	}
 
-	public int get_move_count(int move)
+	public int get_move_count()
 	{
-		return move_count =+ move;
+		return move_count;
+	}
+	
+	public void set_move_count(int count)
+	{
+		move_count = count;
+	}
+	
+	public void minus_move_count(int move)
+	{
+		move_count -= move;
 	}
 }
