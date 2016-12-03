@@ -14,6 +14,7 @@ class Game_Board extends JPanel{
 	private final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
 	private Random random = new Random();
 	private Calendar oCalendar = Calendar.getInstance( );
+	private GridLayout gridLayout = new GridLayout(ROW, COL, GAP, GAP);
 	
 	private GameObject gameObject[][] = new GameObject[ROW][COL];
 	public static GameObject selectedObject;
@@ -107,7 +108,11 @@ class Game_Board extends JPanel{
 		
 		//change
 		for(int i = checkNum-1 ; i >= 0; i--){
-			checkedObject[i].setImage(width/COL - GAP*2, height/ROW - GAP*2,
+			int r = checkedObject[i].ROW, c = checkedObject[i].COL;
+			this.remove(gameObject[r][c]);//remove
+			gameObject[r][c] = new GameObject(r, c, this);
+			this.add(gameObject[r][c], r*COL + c);
+			gameObject[r][c].setImage(width/COL - GAP*2, height/ROW - GAP*2,
 					random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 		}
 		

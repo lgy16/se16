@@ -12,8 +12,8 @@ import javax.swing.JButton;
 //import bubblepop.GameObject.MyActionLitener;
 
 class GameObject extends JButton{
-	private Game_Board upper;
-	private final int ROW, COL;
+	Game_Board upper;
+	final int ROW, COL;
 	public int imgNum;
    
 	public GameObject(int row, int col, Game_Board upper){
@@ -120,6 +120,44 @@ class GameObject extends JButton{
 			if(Game_Board.selectedObject == null){
 				upper.upper.sound.startSound("select");
 				selectObject();
+			}
+			else{
+				moveObject();
+			}
+		}
+	}
+}
+
+
+class GameObject_Click extends GameObject{
+	public GameObject_Click(int row, int col, Game_Board upper){
+		super(row, col, upper);
+	}
+	
+	void Sound(){
+		upper.upper.sound.startSound("clickItem");
+	}
+}
+
+class RemoveSame extends GameObject_Click{
+	public RemoveSame(int row, int col, Game_Board upper){
+		super(row, col, upper);
+	}
+	class MyActionLitener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if(Game_Board.selectedObject == null){
+				int count = 0;
+				Sound();
+				for(int row = 0; row < ROW; row++){
+					for(int col = 0; col < COL; col++){
+						if(imgNum == upper.gameObject[row][col].imgNum){
+							count++;
+							if(row != ROW && col != COL){
+								System.out.println(row + "/" + col);
+							}
+						}
+					}
+				}
 			}
 			else{
 				moveObject();

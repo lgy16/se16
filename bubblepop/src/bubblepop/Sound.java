@@ -1,4 +1,4 @@
-package bubblepop;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 class Sound {
-	java.net.URL /*url,*/ bgmURL, moveSoundURL, cantMoveSoundURL, selectButtonSoundURL;
-	File /*file,*/ bgmFile, moveSoundFile, cantMoveSoundFile, selectButtonSoundFile;
-	Clip /*clip,*/ bgmClip, moveSoundClip, cantMoveSoundClip, selectuButtonClip;
+	java.net.URL /*url,*/ bgmURL, moveSoundURL, cantMoveSoundURL, selectButtonSoundURL, clickItemSoundURL;
+	File /*file,*/ bgmFile, moveSoundFile, cantMoveSoundFile, selectButtonSoundFile, clickItemSoundFile;
+	Clip /*clip,*/ bgmClip, moveSoundClip, cantMoveSoundClip, selectuButtonClip, clickItemSoundClip;
 
 	public Sound(){
 		bgmURL = getClass().getResource("sound/Smario.wav");
@@ -24,6 +24,9 @@ class Sound {
 		cantMoveSoundFile = new File(cantMoveSoundURL.getPath());
 		selectButtonSoundURL = getClass().getResource("sound/Coin.wav");
 		selectButtonSoundFile = new File(selectButtonSoundURL.getPath());
+		clickItemSoundURL = getClass().getResource("sound/Coin.wav");
+		clickItemSoundFile = new File(clickItemSoundURL.getPath());
+		
 		
 		try {
 			bgmClip = AudioSystem.getClip();
@@ -63,6 +66,15 @@ class Sound {
 						selectuButtonClip.close();
 				}
 			});
+			clickItemSoundClip = AudioSystem.getClip();
+			clickItemSoundClip.addLineListener(new LineListener() {
+				@Override
+				public void update(LineEvent event) {
+					//CLOSE, OPEN, START, STOP
+					if(event.getType() == LineEvent.Type.STOP)
+						clickItemSoundClip.close();
+				}
+			});
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -88,6 +100,10 @@ class Sound {
 				selectuButtonClip.open(AudioSystem.getAudioInputStream(selectButtonSoundFile));
 				selectuButtonClip.start();
 				break;
+			case "clickItem":
+				clickItemSoundClip.open(AudioSystem.getAudioInputStream(clickItemSoundFile));
+				clickItemSoundClip.start();
+				break;
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -106,5 +122,8 @@ class Sound {
 		
 		selectuButtonClip.stop();
 		selectuButtonClip.close();
+		
+		clickItemSoundClip.stop();
+		clickItemSoundClip.close();
 	}
 }

@@ -28,19 +28,9 @@ public class AddRanking extends javax.swing.JFrame {
     }
 
     public AddRanking(Game_Info info, Game g) {
-    	switch(info.get_game_level()){
-    	case "상":
-    		level = "high";
-    		break;
-    	case "중":
-    		level = "middle";
-    		break;
-    	case "하":
-    		level = "low";
-    		break;
-    	}
-    	game=g;
     	score = info.get_game_score();
+    	level = info.get_game_level();
+    	game=g;
         initComponents();
     }
 
@@ -82,7 +72,7 @@ public class AddRanking extends javax.swing.JFrame {
 
         jButton2.setText("등록안함");
 
-        jLabel1.setText("난이도 : 상                                    획득한 점수: " + score + "점");
+        jLabel1.setText(" 난이도 : " + level + "   획득한 점수: " + score + "점");
         
         jLabel2.setText("랭킹에 등록하시려면 아래 빈칸에 닉네임을 입력해 주세요.");
 
@@ -131,7 +121,18 @@ public class AddRanking extends javax.swing.JFrame {
         pack();
     }// </editor-fold>          
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
-    {                                         
+    {
+    	switch(level){
+    	case "상":
+    		level = "high";
+    		break;
+    	case "중":
+    		level = "middle";
+    		break;
+    	case "하":
+    		level = "low";
+    		break;
+    	}                
         //랭킹등록 버튼 클릭
     	JOptionPane.showMessageDialog(this, "등록되었습니다.", null, JOptionPane.INFORMATION_MESSAGE);
     	new RankingEntry(level, jTextField1.getText(), String.valueOf(score));
