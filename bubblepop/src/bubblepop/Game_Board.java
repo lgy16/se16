@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 class Game_Board extends JPanel{
 	protected Sound sound;
 	private final int width, height;
-	private final int ROW = 8, COL = 6, GAP = 5;
+	private final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
 	private Random random = new Random();
 	private Calendar oCalendar = Calendar.getInstance( );
 	
@@ -33,7 +33,7 @@ class Game_Board extends JPanel{
 				gameObject[row][col] = new GameObject(row, col, this);
 				this.add(gameObject[row][col]);
 				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-												random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+						random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 			}
 		}
 		while(this.Check() == 0);//터지는게 없을 때까지 반복 체크
@@ -108,7 +108,8 @@ class Game_Board extends JPanel{
 
 		//change
 		for(checkNum--; checkNum >= 0; checkNum--){
-			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2, random.nextInt(4*oCalendar.get(Calendar.MILLISECOND))%4);
+			checkedObject[checkNum].setImage(width/COL - GAP*2, height/ROW - GAP*2,
+					random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 		}
 		
 //		try {

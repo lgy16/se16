@@ -36,6 +36,10 @@ class GameObject extends JButton{
 				return "img/square.png";
 			case 3:
 				return "img/star.png";
+			case 4:
+				return "img/diamond.png";
+			case 5:
+				return "img/hexagon.png";
 			}
 	   case "select":
 		   switch(imgNum){
@@ -47,6 +51,10 @@ class GameObject extends JButton{
 			   return "img/selected_square.png";
 		   case 3:
 			   return "img/selected_star.png";
+		   case 4:
+				return "img/selected_diamond.png";
+		   case 5:
+				return "img/selected_hexagon.png";
 		   }		   
 		}
 		return "Fail";
