@@ -1,5 +1,8 @@
 package bubblepop;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.JOptionPane;
 
 
@@ -15,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author LGY
  */
-public class Main extends javax.swing.JFrame 
+public class Main extends javax.swing.JFrame 	
 {
 
     /**
@@ -68,28 +71,63 @@ a     * This method is called from within the constructor to initialize the form
 
         jLabel1.setText("난이도 선택");
 
+        //jToggleButton1.setToolTipText("");
+       
         jToggleButton1.setText("하");
-        jToggleButton1.setToolTipText("");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
         jToggleButton2.setText("중");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
-            }
-        });
-
         jToggleButton3.setText("상");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
-            }
-        });
         
+        jToggleButton1.addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			jToggleButton2.setSelected(false);
+    		    	jToggleButton3.setSelected(false);
+    		    	level="하";
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			level=null;
+        		}
+		   }
+		});
+        
+        jToggleButton2.addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			jToggleButton1.setSelected(false);
+    		    	jToggleButton3.setSelected(false);
+    		    	level="중";
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			level=null;
+        		}
+		   }
+		});
+
+        jToggleButton3.addItemListener(new ItemListener()
+        {
+        	public void itemStateChanged(ItemEvent ev) 
+        	{
+        		if(ev.getStateChange()==ItemEvent.SELECTED)
+        		{
+        			jToggleButton1.setSelected(false);
+    		    	jToggleButton2.setSelected(false);
+    		    	level="상";
+    			}
+        		else if(ev.getStateChange()==ItemEvent.DESELECTED)
+        		{
+        			level=null;
+        		}
+		   }
+		});
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////        
 ///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
     	this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
@@ -149,29 +187,7 @@ a     * This method is called from within the constructor to initialize the form
         );
 
         pack();
-    }// </editor-fold>                        
-
-    
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        //하
-        jToggleButton2.setSelected(false);
-    	jToggleButton3.setSelected(false);
-    	level="하";
-    }                                              
-
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        //중
-        jToggleButton1.setSelected(false);
-    	jToggleButton3.setSelected(false);
-    	level="중";
-    }                                              
-
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        //상
-        jToggleButton1.setSelected(false);
-    	jToggleButton2.setSelected(false);
-    	level="상";
-    }                                              
+    }// </editor-fold>                                                        
 
     //다음 버튼을 눌렀을 때
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)

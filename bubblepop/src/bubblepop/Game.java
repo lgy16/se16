@@ -88,11 +88,13 @@ public class Game extends javax.swing.JFrame {
         jPanel2.setLayout(new GridLayout(1, 5, 24, 24));
         for(int i=0, j=0; i<5; i++)
         {
-        	if(j<=(count-1))
+        	if(i<=(count-1))
         	{
 	        	
-	    		while(!i_list.get_selected(j))
+	    		//while(!i_list.get_selected(j))
+        		while(true)
 	    		{
+        			if(i_list.get_selected(j)) break;
 	    			j++;
 	    		}
 	    		System.out.println("i = " + i + ",\t j = " + j);
@@ -332,9 +334,8 @@ public class Game extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		
-    	AddRanking frame = new AddRanking(game_info); 
+    	AddRanking frame = new AddRanking(game_info, this); 
     	frame.setVisible(true);
-    	dispose();
     }
 
     // Variables declaration - do not modify                     
