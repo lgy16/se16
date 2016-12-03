@@ -10,7 +10,7 @@ public class Game_Info {
 	{
 		game_level = level;
 		game_score = 0;
-		if(level == "상") move_count = 30;
+		if(level == "상") move_count = 5;
 		else if(level == "중") move_count = 40;
 		else if(level == "하") move_count = 50;
 	}

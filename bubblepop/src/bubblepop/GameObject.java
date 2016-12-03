@@ -108,6 +108,10 @@ class GameObject extends JButton{
 		Game_Board.selectedObject = null;
 		
 		while(upper.Check() > 0);
+		
+		if(upper.upper.game_info.get_move_count() <= 0){
+			upper.upper.Exit_Game();
+		}
 	}
    
 	//버튼 클릭 이벤트

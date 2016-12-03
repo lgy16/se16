@@ -5,7 +5,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
 import java.awt.GridLayout;
+import java.io.File;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JLabel;
 
 
@@ -234,6 +240,34 @@ public class Game extends javax.swing.JFrame {
                 new Game().setVisible(true);
             }
         });
+    }
+    
+    void Exit_Game(){
+        sound.Close_All_Sound();
+        
+        java.net.URL gameOverURL = getClass().getResource("sound/Game_over.wav");
+        File gameOverFile = new File(gameOverURL.getPath());
+        Clip gameOverClip;
+		try {
+			gameOverClip = AudioSystem.getClip();
+			gameOverClip.addLineListener(new LineListener() {
+				@Override
+				public void update(LineEvent event)
+				{
+					//CLOSE, OPEN, START, STOP
+					if(event.getType() == LineEvent.Type.STOP)
+						gameOverClip.close();
+				}
+			});
+			gameOverClip.open(AudioSystem.getAudioInputStream(gameOverFile));
+			gameOverClip.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+    	AddRanking frame = new AddRanking(game_info); 
+    	frame.setVisible(true);
+    	dispose();
     }
 
     // Variables declaration - do not modify                     

@@ -17,11 +17,28 @@ import java.awt.event.ActionEvent;
  * @author LGY
  */
 public class AddRanking extends javax.swing.JFrame {
-
+	private int score;
+	private String level;
     /**
      * Creates new form AddRanking
      */
-    public AddRanking() {
+	public AddRanking() {
+        initComponents();
+    }
+
+    public AddRanking(Game_Info info) {
+    	switch(info.get_game_level()){
+    	case "상":
+    		level = "high";
+    		break;
+    	case "중":
+    		level = "middle";
+    		break;
+    	case "하":
+    		level = "low";
+    		break;
+    	}
+    	score = info.get_game_score();
         initComponents();
     }
 
@@ -63,7 +80,7 @@ public class AddRanking extends javax.swing.JFrame {
 
         jButton2.setText("등록안함");
 
-        jLabel1.setText(" 2016년 11월 2일 난이도 : 상 획득한 점수: 128점");
+        jLabel1.setText("난이도 : 상                                    획득한 점수: " + score + "점");
         
         jLabel2.setText("랭킹에 등록하시려면 아래 빈칸에 닉네임을 입력해 주세요.");
 
@@ -115,7 +132,7 @@ public class AddRanking extends javax.swing.JFrame {
     {                                         
         //래킹등록 버튼 클릭
     	JOptionPane.showMessageDialog(this, "등록되었습니다.", null, JOptionPane.INFORMATION_MESSAGE);
-    	RankingEntry ar = new RankingEntry("high", jTextField1.getText(), "610");
+    	new RankingEntry(level, jTextField1.getText(), String.valueOf(score));
     	Ranking frame = new Ranking();
     	frame.setResizable(false);
     	frame.setVisible(true);
