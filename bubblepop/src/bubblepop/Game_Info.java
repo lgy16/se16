@@ -36,14 +36,9 @@ public class Game_Info {
 	{
 		game_score =+ score;
 	}
-	
-	public int use_move_count()
+
+	public int get_move_count(int move)
 	{
-		return --move_count;	//0을 리턴하면 게임 종료
-	}
-	
-	public int get_move_count()
-	{
-		return move_count;
+		return move_count =+ move;
 	}
 }
