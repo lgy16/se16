@@ -25,7 +25,8 @@ class Game_Board extends JPanel{
 		this.getPreferredSize();//사이즈 설정
 		this.setBackground(new Color(219,231,251));
 		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
-      
+		sound.startSound("sound/Smario.wav",0);
+		
 		//Create GameObject
 		for(int row = 0; row < ROW; row++){
 			for(int col = 0; col < COL; col++){

@@ -89,9 +89,11 @@ class GameObject extends JButton{
 			int tmp = imgNum;
 			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
 			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
+			upper.sound.startSound("sound/Up.wav",0);
 		}
 		else{
 			selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
+			upper.sound.startSound("sound/Stun.wav",0);
 		}
 		Game_Board.selectedObject = null;
 		
@@ -102,7 +104,7 @@ class GameObject extends JButton{
 	private class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(Game_Board.selectedObject == null){
-				upper.sound.ClickSound();
+				upper.sound.startSound("sound/Coin.wav",0);
 				selectObject();
 			}
 			else{

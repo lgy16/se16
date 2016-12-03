@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 ////////////Game È­¸é
 public class Game extends javax.swing.JFrame {
-
+	protected Sound sound;
 	private Item_list i_list;
 	private Game_Info game_info;
 	private int count;
@@ -189,6 +189,7 @@ public class Game extends javax.swing.JFrame {
                     	frame.setVisible(true);
                     	dispose();	
         	        }
+        		//sound.stop_Main_Sound();
         	}	
         });
        
