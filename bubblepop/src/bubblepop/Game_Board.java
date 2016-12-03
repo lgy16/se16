@@ -16,7 +16,7 @@ class Game_Board extends JPanel{
 	private Calendar oCalendar = Calendar.getInstance( );
 	private GridLayout gridLayout = new GridLayout(ROW, COL, GAP, GAP);
 	
-	private GameObject gameObject[][] = new GameObject[ROW][COL];
+	GameObject gameObject[][] = new GameObject[ROW][COL];
 	public static GameObject selectedObject;
    
 	public Game_Board(int width, int height, Game upper){
