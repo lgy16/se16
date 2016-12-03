@@ -9,7 +9,7 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 class Game_Board extends JPanel{
-	protected Sound sound;
+	protected Game upper;
 	private final int width, height;
 	private final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
 	private Random random = new Random();
@@ -18,14 +18,14 @@ class Game_Board extends JPanel{
 	private GameObject gameObject[][] = new GameObject[ROW][COL];
 	public static GameObject selectedObject;
    
-	public Game_Board(int width, int height){
-		sound = new Sound();
+	public Game_Board(int width, int height, Game upper){
+		this.upper = upper;
 		this.width = width;
 		this.height = height;
 		this.getPreferredSize();//사이즈 설정
 		this.setBackground(new Color(219,231,251));
 		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
-		sound.startSound("sound/Smario.wav",0);
+		upper.sound.startSound("bgm",99);
 		
 		//Create GameObject
 		for(int row = 0; row < ROW; row++){

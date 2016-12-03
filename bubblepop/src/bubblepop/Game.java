@@ -39,8 +39,8 @@ public class Game extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-    	
-    	gameBoard = new Game_Board(375, 450);
+    	sound = new Sound();    	
+    	gameBoard = new Game_Board(375, 450, this);
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -184,12 +184,12 @@ public class Game extends javax.swing.JFrame {
         	            "지금 게임을 중단하면 랭킹에 등록 할 수 없습니다. 게속하시겠습니까?", null, 
         	            JOptionPane.YES_NO_OPTION,
         	            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-        	            Main frame = new Main();
-        	            frame.setResizable(false);
-                    	frame.setVisible(true);
-                    	dispose();	
-        	        }
-        		//sound.stop_Main_Sound();
+        			Main frame = new Main();
+        			frame.setResizable(false);
+                    frame.setVisible(true);
+                    dispose();
+                    sound.Close_All_Sound();
+        	    }
         	}	
         });
        

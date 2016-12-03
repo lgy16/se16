@@ -347,8 +347,8 @@ public class ItemSelect extends javax.swing.JFrame {
 			count=0;		
 			dispose();
 			m.dispose();
-			Sound sound = new Sound();
-			sound.startSound("sound/Super.wav",0);
+			//Sound sound = new Sound();
+			//sound.startSound("sound/Super.wav",0);
 	    }
 		else
 		{
