@@ -128,6 +128,10 @@ class Game_Board extends JPanel{
 			return new GameObject(row, col, this);
 		case "RemoveSame":
 			return new RemoveSame(row, col, this);
+		case "RemoveVerticalLine":
+			return new RemoveVerticalLine(row, col, this);
+		case "RemoveHorizon":
+			return new RemoveHorizon(row, col, this);
 		}
 		return null;
 	}

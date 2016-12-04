@@ -26,7 +26,7 @@ class Sound {
 		selectButtonSoundFile = new File(selectButtonSoundURL.getPath());
 		clickItemSoundURL = getClass().getResource("sound/Click_Item.wav");
 		clickItemSoundFile = new File(clickItemSoundURL.getPath());
-		explodeSoundURL = getClass().getResource("sound/explode.wav");
+		explodeSoundURL = getClass().getResource("sound/explode(short).wav");
 		explodeSoundFile = new File(explodeSoundURL.getPath());
 		
 		
