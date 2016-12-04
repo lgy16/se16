@@ -1,7 +1,7 @@
 package bubblepop;
 
 //외부아이템 부모클래스
-public abstract class Item
+public abstract class Item extends Game_Board
 {
 	private static String item_name;
 	private static String item_ico;

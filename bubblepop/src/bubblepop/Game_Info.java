@@ -4,7 +4,7 @@ public class Game_Info {
 	
 	private String game_level;
 	private int game_score;
-	int move_count;
+	static int move_count;
 	
 	public Game_Info(String level)
 	{

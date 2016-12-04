@@ -6,11 +6,6 @@ public class ChangeOne_Item extends Item
 	private static String item_name = "한개 바꾸기";
 	private static String item_ico = "ex_item/ChangeOne_ico.gif";
 	
-	public ChangeOne_Item()
-	{
-		
-	}
-	
 	public String get_item_name()
 	{
 		//System.out.println(item_name);
@@ -25,6 +20,13 @@ public class ChangeOne_Item extends Item
 	
 	public void item_use()
 	{
+		try{
+			j_p.itemChangeOne();
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("아이템 에러");
+		}
 		System.out.println("GhangeOne_Item_use");
 	}
 }

@@ -6,11 +6,6 @@ public class AllUseItemObject_Item extends Item
 	private static String item_name = "모든 아이템 오브젝트 터트리기";
 	private static String item_ico = "ex_item/AllUseItemObject_ico.gif";
 	
-	public AllUseItemObject_Item()
-	{
-
-	}
-	
 	public String get_item_name()
 	{
 		//System.out.println(item_name);

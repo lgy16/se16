@@ -6,10 +6,8 @@ public class AllReset_Item extends Item
 	private static String item_name = "전체 리셋";
 	private static String item_ico = "ex_item/AllReset_ico.gif";
 	
-	public AllReset_Item()
-	{
-
-	}
+	//private static Game_Board g_board;
+		//private static Game g = new Game();
 	
 	public String get_item_name()
 	{
@@ -24,6 +22,16 @@ public class AllReset_Item extends Item
 	}
 	public void item_use()
 	{
+		//System.out.println(g_board);
+		//System.out.println(j_p);
+		try{
+			j_p.itemAllreset();
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("아이템 에러");
+		}
+		
 		System.out.println("AllReset_Item_use");
 	}
 }

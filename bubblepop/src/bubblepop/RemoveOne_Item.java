@@ -5,10 +5,13 @@ public class RemoveOne_Item extends Item
 {
 	private static String item_name = "한개 지우기";
 	private static String item_ico = "ex_item/RemoveOne_ico.gif";
+	private Game g;
+	private Main m;
+	private Game_Info game_info;
 	
-	public RemoveOne_Item()
-	{
-
+	public RemoveOne_Item() {
+		game_info = new Game_Info(m.level);
+		// TODO Auto-generated constructor stub
 	}
 	
 	public String get_item_name()
@@ -25,6 +28,8 @@ public class RemoveOne_Item extends Item
 	
 	public void item_use()
 	{
+		System.out.println(game_info.get_game_score());
+		game_info.set_game_score(game_info.get_game_score()+10);
 		System.out.println("RemoveOne_Item_use");
 	}
 }

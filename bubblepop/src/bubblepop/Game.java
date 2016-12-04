@@ -228,6 +228,8 @@ public class Game extends javax.swing.JFrame {
 		        public void actionPerformed(java.awt.event.ActionEvent evt) {
 		        	ex_items[0].item_use();
 		        	//나중에 다시못쓰는 코드 추가할 것
+		        	movecntLabel.setText(String.valueOf(game_info.get_move_count()));
+		        	ex_items[0].setVisible(false);
 		        }
 		    });
 		    
@@ -236,6 +238,8 @@ public class Game extends javax.swing.JFrame {
 			    ex_item_buttons[1].addActionListener(new java.awt.event.ActionListener() {
 			        public void actionPerformed(java.awt.event.ActionEvent evt) {
 			        	ex_items[1].item_use();
+			        	movecntLabel.setText(String.valueOf(game_info.get_move_count()));
+			        	ex_items[1].setVisible(false);
 			        }
 			    });
 			    
@@ -244,6 +248,8 @@ public class Game extends javax.swing.JFrame {
 			    	ex_item_buttons[2].addActionListener(new java.awt.event.ActionListener() {
 			    		public void actionPerformed(java.awt.event.ActionEvent evt) {
 			    			ex_items[2].item_use();
+			    			movecntLabel.setText(String.valueOf(game_info.get_move_count()));
+				        	ex_items[2].setVisible(false);
 			    		}
 			    	});
 			    	
@@ -252,6 +258,8 @@ public class Game extends javax.swing.JFrame {
 			    		ex_item_buttons[3].addActionListener(new java.awt.event.ActionListener() {
 				    		public void actionPerformed(java.awt.event.ActionEvent evt) {
 				    			ex_items[3].item_use();
+				    			movecntLabel.setText(String.valueOf(game_info.get_move_count()));
+					        	ex_items[3].setVisible(false);
 				    		}
 				    	});
 			    		
@@ -260,6 +268,8 @@ public class Game extends javax.swing.JFrame {
 			    			ex_item_buttons[4].addActionListener(new java.awt.event.ActionListener() {
 					    		public void actionPerformed(java.awt.event.ActionEvent evt) {
 					    			ex_items[4].item_use();
+					    			movecntLabel.setText(String.valueOf(game_info.get_move_count()));
+						        	ex_items[4].setVisible(false);
 					    		}
 					    	});
 			    		}
