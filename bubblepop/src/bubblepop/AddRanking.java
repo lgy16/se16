@@ -85,6 +85,30 @@ public class AddRanking extends javax.swing.JFrame {
         jLabel2.setText("랭킹에 등록하시려면 아래 빈칸에 닉네임을 입력해 주세요.");
 
         jLabel3.setText("닉네임");
+        
+/////////////////////////////////////////////////////////////////////////////////////////////////////        
+///////////X눌렀을 때 종료할 거냐 묻는 코드///////////////////////////////////////////////////////////////////
+		this.setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new java.awt.event.WindowAdapter() 
+		{
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent e) 		
+			{
+				if (JOptionPane.showConfirmDialog(null, 
+						"랭킹등록을 하지 않고 메인화면으로 돌아가시겠습니까?", null, 
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+					Main frame = new Main();
+					frame.setResizable(false);
+					frame.setVisible(true);
+					game.dispose();
+					dispose();
+					//sound.Close_All_Sound();
+				}
+			}	
+		});
+/////////////////////////////////////////////////////////////////////////////////////////////////////        
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
