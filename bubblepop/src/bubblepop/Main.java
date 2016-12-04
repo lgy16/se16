@@ -261,7 +261,7 @@ a     * This method is called from within the constructor to initialize the form
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)
     {                                         
         //튜토리얼 버튼을 눌렀을 때
-    	Tutorial frame = new Tutorial();
+    	TutorialMain frame = new TutorialMain();
     	frame.setResizable(false);
     	frame.setVisible(true);
     }                     
