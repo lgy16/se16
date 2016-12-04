@@ -70,7 +70,12 @@ class Game_Board extends JPanel{
 						random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 			}
 		}
-		while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
+		//while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
+		while(true)
+		{
+			if(this.Check() <= 0) break;
+			sleep(2000);
+		}
 		isItStart = true;
 	}
 	
@@ -165,7 +170,7 @@ class Game_Board extends JPanel{
 		{
 			Effects.main(null);
 		}
-		
+
 		return checkNum;
 	}
 	
@@ -226,7 +231,12 @@ class Game_Board extends JPanel{
 	   public void itemChange_CountUp()
 	   {
 	      
-	   }
+	   }   
 	   
+		public void sleep(int time){
+		    try {
+		      Thread.sleep(time);
+		    } catch (InterruptedException e) { }
+		}
 	   /*****************/
 }
