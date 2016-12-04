@@ -44,6 +44,7 @@ class Game_Board extends JPanel{
 	public Dimension getPreferredSize(){
 		return new Dimension(width, height);
 	}
+	
 
 	//패널 전체 검사 후 스텍에 저장 -> 저장된 오브젝트의 이미지 변경
 	public int Check(){

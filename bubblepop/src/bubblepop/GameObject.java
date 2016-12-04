@@ -25,6 +25,10 @@ class GameObject extends JButton{
 	   litener = new MyActionLitener();
 	   this.addActionListener(litener);
 	}
+	
+	void getPosition(){
+		System.out.println(this.getLocationOnScreen().getX() + "/" + this.getLocationOnScreen().getY());
+	}
    
 	//이미지 주소 불러오기
 	String selectImage(String mod, int imgNum){
@@ -154,6 +158,7 @@ class GameObject extends JButton{
 	//버튼 클릭 이벤트
 	class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			getPosition();
 			if(upper.upper.game_info.get_move_count() > 0){
 				if(Game_Board.selectedObject == null){
 					upper.upper.sound.startSound("select");

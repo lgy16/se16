@@ -26,7 +26,7 @@ class Sound {
 		selectButtonSoundFile = new File(selectButtonSoundURL.getPath());
 		clickItemSoundURL = getClass().getResource("sound/Click_Item.wav");
 		clickItemSoundFile = new File(clickItemSoundURL.getPath());
-		explodeSoundURL = getClass().getResource("sound/explode(short).wav");
+		explodeSoundURL = getClass().getResource("sound/explode.wav");
 		explodeSoundFile = new File(explodeSoundURL.getPath());
 		
 		
@@ -100,22 +100,27 @@ class Sound {
 				bgmClip.loop(99);
 				break;
 			case "move":
+				moveSoundClip.close();
 				moveSoundClip.open(AudioSystem.getAudioInputStream(moveSoundFile));
 				moveSoundClip.start();
 				break;
 			case "click_error":
+				cantMoveSoundClip.close();
 				cantMoveSoundClip.open(AudioSystem.getAudioInputStream(cantMoveSoundFile));
 				cantMoveSoundClip.start();
 				break;
 			case "select":
+				selectuButtonClip.close();
 				selectuButtonClip.open(AudioSystem.getAudioInputStream(selectButtonSoundFile));
 				selectuButtonClip.start();
 				break;
 			case "clickItem":
+				clickItemSoundClip.close();
 				clickItemSoundClip.open(AudioSystem.getAudioInputStream(clickItemSoundFile));
 				clickItemSoundClip.start();
 				break;
 			case "explode":
+				explodeSoundClip.close();
 				explodeSoundClip.open(AudioSystem.getAudioInputStream(explodeSoundFile));
 				explodeSoundClip.start();
 				break;
