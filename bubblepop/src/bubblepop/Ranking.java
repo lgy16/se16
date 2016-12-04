@@ -68,9 +68,18 @@ public class Ranking extends javax.swing.JFrame {
         jLabel2.setPreferredSize(new Dimension(122, 30));
         jLabel3.setPreferredSize(new Dimension(122, 30));
         jLabel4.setPreferredSize(new Dimension(122, 30));
+        
+        
+        setPreferredSize(new java.awt.Dimension(560, 600));
+        java.awt.Dimension scrnSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    	int x = (scrnSize.width - 560)/2;
+    	int y = (scrnSize.height - 600)/2;
+    	
+    	setLocation(x,y);
+        
         setResizable(false);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("BubblePop :: Ranking");
 
         jTabbedPane1.setMaximumSize(new java.awt.Dimension(100, 100));

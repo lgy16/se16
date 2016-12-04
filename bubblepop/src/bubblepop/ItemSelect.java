@@ -99,6 +99,12 @@ public class ItemSelect extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(320, 350));
         setPreferredSize(new java.awt.Dimension(320, 350));
         setResizable(false);
+        
+        java.awt.Dimension scrnSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    	int x = (scrnSize.width - 320)/2;
+    	int y = (scrnSize.height - 350)/2;
+    	
+    	setLocation(x,y);
 
         jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

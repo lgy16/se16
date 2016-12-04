@@ -62,7 +62,15 @@ public class AddRanking extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
+        setPreferredSize(new java.awt.Dimension(400, 250));
+        java.awt.Dimension scrnSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    	int x = (scrnSize.width - 400)/2;
+    	int y = (scrnSize.height - 250)/2;
+    	
+    	setLocation(x,y);
+    	
         setResizable(false);
 
         

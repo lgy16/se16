@@ -9,6 +9,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.GroupLayout;
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 
 
@@ -55,6 +57,12 @@ a     * This method is called from within the constructor to initialize the form
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
 
+        setPreferredSize(new java.awt.Dimension(430, 320 ));
+        java.awt.Dimension scrnSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    	int x = (scrnSize.width - 430)/2;
+    	int y = (scrnSize.height - 320)/2;
+    	
+    	setLocation(x,y);
 
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BubblePop");
@@ -230,6 +238,7 @@ a     * This method is called from within the constructor to initialize the form
 				Game_Info game_info=new Game_Info(level);
 				
 				ItemSelect frame = new ItemSelect(game_info, this);
+				
 				frame.setResizable(false);
 				frame.setVisible(true);
 		    }
@@ -244,6 +253,7 @@ a     * This method is called from within the constructor to initialize the form
     {                                         
         //·©Å· ¹öÆ°À» ´­·¶À» ¶§
     	Ranking frame = new Ranking();
+    	
     	frame.setResizable(false);
     	frame.setVisible(true);
     	dispose();

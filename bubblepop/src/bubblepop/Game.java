@@ -59,12 +59,19 @@ public class Game extends javax.swing.JFrame {
     	sound = new Sound();    	
     	gameBoard = new Game_Board(375, 450, this);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("BubblePop :: Play");
         setResizable(false);
         setMaximumSize(new java.awt.Dimension(400, 660));
         setMinimumSize(new java.awt.Dimension(400, 660));
         setPreferredSize(new java.awt.Dimension(400, 660));
+        
+        setPreferredSize(new java.awt.Dimension(400, 660));
+        java.awt.Dimension scrnSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    	int x = (scrnSize.width - 400)/2;
+    	int y = (scrnSize.height - 660)/2;
+    	
+    	setLocation(x,y);
 
         jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
         jLabel2.setPreferredSize(new java.awt.Dimension(30, 30));
