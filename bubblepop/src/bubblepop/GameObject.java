@@ -10,11 +10,13 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import bubblepop.RemoveSame.MyActionLitener;
+
 //import bubblepop.GameObject.MyActionLitener;
 
 class GameObject extends JButton{
 	Game_Board upper;
-	final int ROW, COL;
+	int ROW, COL;
 	public int imgNum;
 	MyActionLitener litener;
    
@@ -82,6 +84,36 @@ class GameObject extends JButton{
 		   return "img/RemoveVerticalLine.png";
 	   case "RemoveHorizon":
 		   return "img/RemoveHorizon.png";
+	   case "set_CountUp":
+		   switch(imgNum){
+		   case 0:
+				return "img/CountUp_circle.png";
+			case 1:
+				return "img/CountUp_triangle.png";
+			case 2:
+				return "img/CountUp_square.png";
+			case 3:
+				return "img/CountUp_star.png";
+			case 4:
+				return "img/CountUp_diamond.png";
+			case 5:
+				return "img/CountUp_hexagon.png";
+		   }
+	   case "select_CountUp":
+		   switch(imgNum){
+		   case 0:
+				return "img/CountUp_selected_circle.png";
+			case 1:
+				return "img/CountUp_selected_triangle.png";
+			case 2:
+				return "img/CountUp_selected_square.png";
+			case 3:
+				return "img/CountUp_selected_star.png";
+			case 4:
+				return "img/CountUp_selected_diamond.png";
+			case 5:
+				return "img/CountUp_selected_hexagon.png";
+		   }
 		}
 		return "Fail";
 	}
@@ -120,9 +152,32 @@ class GameObject extends JButton{
 		
 		if((selected.ROW == N && selected.COL == this.COL) || (selected.ROW == S && selected.COL == this.COL) 
 				|| (selected.ROW == this.ROW && selected.COL == W) || (selected.ROW == this.ROW && selected.COL == E)){
-			int tmp = imgNum;
-			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), tmp);
+			//int tmp = imgNum;
+			int this_ROW = this.ROW, this_COL = this.COL, selected_imgNum = Game_Board.selectedObject.imgNum;
+			
+			//move에서 선택된 것 -> select된 곳으로 이동
+			upper.gameObject[selected.ROW][selected.COL] = upper.gameObject[this_ROW][this_COL];
+			upper.gameObject[selected.ROW][selected.COL].ROW = selected.ROW;
+			upper.gameObject[selected.ROW][selected.COL].COL = selected.COL;
+			upper.add(upper.gameObject[selected.ROW][selected.COL], upper.gameObject[selected.ROW][selected.COL].ROW * upper.COL + upper.gameObject[selected.ROW][selected.COL].COL);
+			
+			//select에서 선택된 것 -> move된 곳으로 이동
+			upper.gameObject[this_ROW][this_COL] = Game_Board.selectedObject;
+			upper.gameObject[this_ROW][this_COL].ROW = this_ROW;
+			upper.gameObject[this_ROW][this_COL].COL = this_COL;			
+			upper.gameObject[this_ROW][this_COL].setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected_imgNum);
+			upper.add(upper.gameObject[this_ROW][this_COL], upper.gameObject[this_ROW][this_COL].ROW * upper.COL + upper.gameObject[this_ROW][this_COL].COL);
+			
+//			void ReplaceObject(int row, int col, int imgNum, String type){
+//				this.remove(gameObject[row][col]);
+//				gameObject[row][col] = CreateObject(row, col, type);
+//				this.add(gameObject[row][col], row*COL + col);
+//				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, imgNum);
+//			}
+			
+//			setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
+//			selected.setImage(this.getIcon().getIconWidth(), this.getIcon().getIconHeight(), empty);
+			
 			upper.upper.sound.startSound("move");
 			upper.upper.game_info.minus_move_count(1);
 			upper.upper.movecntLabel.setText(String.valueOf(upper.upper.game_info.get_move_count()));
@@ -136,19 +191,26 @@ class GameObject extends JButton{
 		while(upper.Check() > 0){
 			//바뀐게 있으면 오브젝트 하나를 아이템으로 변환
 			String itmeType = "";
-			switch(upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND)) % 3){
+			int num = upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND)) % 6;
+			switch(num){
 			case 0:
+			case 1:
 				itmeType = "RemoveSame";
 				break;
-			case 1:
+			case 2:
 				itmeType = "RemoveVerticalLine";
 				break;
-			case 2:
+			case 3:
 				itmeType = "RemoveHorizon";
+				break;
+			case 4:
+			case 5:
+				itmeType = "CountUp";
 				break;
 			}
 			upper.ReplaceObject(ROW, COL, imgNum, itmeType);
 		};
+		
 		
 		if(upper.upper.game_info.get_move_count() <= 0){
 			upper.upper.Exit_Game();
@@ -158,183 +220,17 @@ class GameObject extends JButton{
 	//버튼 클릭 이벤트
 	class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			getPosition();
 			if(upper.upper.game_info.get_move_count() > 0){
 				if(Game_Board.selectedObject == null){
+					//System.out.println(ROW + "/" + COL + "/" + imgNum);
 					upper.upper.sound.startSound("select");
 					selectObject();
 				}
 				else{
+					//System.out.println(ROW + "/" + COL + "/" + imgNum);
 					moveObject();
 				}
 			}	
-		}
-	}
-}
-
-
-class GameObject_Click extends GameObject{
-	public GameObject_Click(int row, int col, Game_Board upper){
-		super(row, col, upper);
-	}
-	
-	void Sound(){
-		upper.upper.sound.startSound("clickItem");
-	}
-}
-
-class RemoveSame extends GameObject_Click{
-	public RemoveSame(int row, int col, Game_Board upper){
-		super(row, col, upper);
-		this.removeActionListener(litener);
-		litener = new MyActionLitener();
-		this.addActionListener(litener);
-	}
-	
-	@Override
-	public void setImage(int width, int height, int imgNum){
-		this.imgNum = imgNum;
-		try {
-			Image img = ImageIO.read(getClass().getResource(selectImage("RemoveSame", imgNum)));
-			this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	void Sound(){
-		upper.upper.sound.startSound("explode");
-	}
-
-
-	class MyActionLitener extends GameObject_Click.MyActionLitener{
-		public void actionPerformed(ActionEvent e){
-			if(Game_Board.selectedObject == null){
-				Sound();
-				
-				int count = 0;
-				for(int row = 0; row < upper.ROW; row++){
-					for(int col = 0; col < upper.COL; col++){
-						if(imgNum == upper.gameObject[row][col].imgNum){
-							count++;
-							if(row != ROW || col != COL){
-								System.out.println(row + "/" + col);
-								upper.ReplaceObject(row, col, upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND))%upper.MODULAR, "GameObject");
-							}
-						}
-					}
-				}
-				//자기자신이 변하면 그 뒤로 터지는 이미지가 바뀜 그러니 자기자신은 제일 마지막에 바꿈.
-				upper.ReplaceObject(ROW, COL, upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND))%upper.MODULAR, "GameObject");
-				
-				//점수갱신
-				upper.upper.game_info.plus_game_score(count * 10);
-				upper.upper.scoreLabel.setText(String.valueOf(upper.upper.game_info.get_game_score()));
-			}
-			else{
-				GameObject selected = Game_Board.selectedObject;
-				selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-				upper.upper.sound.startSound("click_error");
-				Game_Board.selectedObject = null;
-			}
-			while(upper.Check() > 0);
-		}
-	}
-}
-
-class RemoveVerticalLine extends GameObject_Click{
-	public RemoveVerticalLine(int row, int col, Game_Board upper){
-		super(row, col, upper);
-		this.removeActionListener(litener);
-		litener = new MyActionLitener();
-		this.addActionListener(litener);
-	}
-	
-	@Override
-	public void setImage(int width, int height, int imgNum){
-		this.imgNum = -1;
-		try {
-			Image img = ImageIO.read(getClass().getResource(selectImage("RemoveVerticalLine", -1)));
-			this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	void Sound(){
-		upper.upper.sound.startSound("explode");
-	}
-
-
-	class MyActionLitener extends GameObject_Click.MyActionLitener{
-		public void actionPerformed(ActionEvent e){
-			if(Game_Board.selectedObject == null){
-				Sound();
-				
-				for(int row = 0; row < upper.ROW; row++){
-					upper.ReplaceObject(row, COL, upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND))%upper.MODULAR, "GameObject");
-				}
-				
-				upper.upper.game_info.plus_game_score(upper.COL * 10);
-				upper.upper.scoreLabel.setText(String.valueOf(upper.upper.game_info.get_game_score()));
-			}
-			else{
-				GameObject selected = Game_Board.selectedObject;
-				selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-				upper.upper.sound.startSound("click_error");
-				Game_Board.selectedObject = null;
-			}
-			while(upper.Check() > 0);
-		}
-	}
-}
-
-class RemoveHorizon extends GameObject_Click{
-	public RemoveHorizon(int row, int col, Game_Board upper){
-		super(row, col, upper);
-		this.removeActionListener(litener);
-		litener = new MyActionLitener();
-		this.addActionListener(litener);
-	}
-	
-	@Override
-	public void setImage(int width, int height, int imgNum){
-		this.imgNum = -2;
-		try {
-			Image img = ImageIO.read(getClass().getResource(selectImage("RemoveHorizon", -2)));
-			this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	void Sound(){
-		upper.upper.sound.startSound("explode");
-	}
-
-
-	class MyActionLitener extends GameObject_Click.MyActionLitener{
-		public void actionPerformed(ActionEvent e){
-			if(Game_Board.selectedObject == null){
-				Sound();
-				
-				for(int col = 0; col < upper.COL; col++){
-					upper.ReplaceObject(ROW, col, upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND))%upper.MODULAR, "GameObject");
-				}
-				
-				upper.upper.game_info.plus_game_score(upper.ROW * 10);
-				upper.upper.scoreLabel.setText(String.valueOf(upper.upper.game_info.get_game_score()));
-			}
-			else{
-				GameObject selected = Game_Board.selectedObject;
-				selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
-				upper.upper.sound.startSound("click_error");
-				Game_Board.selectedObject = null;
-			}
-			while(upper.Check() > 0);
 		}
 	}
 }

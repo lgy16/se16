@@ -10,46 +10,44 @@ import javax.swing.JPanel;
 
 class Game_Board extends JPanel{
 	protected Game upper;
-	//private final int width, height;
-	private int width=0, height=0;
+	private int width, height;
 	final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
 	Random random = new Random();
 	Calendar oCalendar = Calendar.getInstance( );
 	private GridLayout gridLayout = new GridLayout(ROW, COL, GAP, GAP);
+	boolean isItStart = false;
 	
 	GameObject gameObject[][] = new GameObject[ROW][COL];
 	public static GameObject selectedObject;
-   
-	/****/
+	
 	public static Game_Board j_p;
 	public static Game_Info g_i;
-	
-	public Game_Board()
-	{
-		
-	}
-	
-	public Game_Board(int width, int height) {
-		this.width = width;
-		this.height = height;
-		this.getPreferredSize();//사이즈 설정
-		this.setBackground(new Color(219,231,251));
-		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
-
-		//Create GameObject
-		for(int row = 0; row < ROW; row++){
-			for(int col = 0; col < COL; col++){
-				gameObject[row][col] = new GameObject(row, col, this);
-				this.add(gameObject[row][col]);
-				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-						random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
-			}
-		}
-		//System.out.println(upper);
-		while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
-	}
-   /***/
+	   
+    public Game_Board()
+    {}
+	   
+    public Game_Board(int width, int height) {
+       this.width = width;
+       this.height = height;
+       this.getPreferredSize();//사이즈 설정
+       this.setBackground(new Color(219,231,251));
+       this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
+ 
+        //Create GameObject
+       for(int row = 0; row < ROW; row++){
+          for(int col = 0; col < COL; col++){
+             gameObject[row][col] = new GameObject(row, col, this);
+             this.add(gameObject[row][col]);
+             gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+                   random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+          }
+       }
+       //System.out.println(upper);
+       while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
+    }	
+   
 	public Game_Board(int width, int height, Game upper){
+		isItStart = false;
 		this.upper = upper;
 		this.width = width;
 		this.height = height;
@@ -57,7 +55,6 @@ class Game_Board extends JPanel{
 		this.setBackground(new Color(219,231,251));
 		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
 		upper.sound.startSound("bgm");
-		j_p = this;
 		
 		//Create GameObject
 		for(int row = 0; row < ROW; row++){
@@ -69,6 +66,7 @@ class Game_Board extends JPanel{
 			}
 		}
 		while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
+		isItStart = true;
 	}
 	
 	@Override //패널 크기 지정
@@ -79,7 +77,7 @@ class Game_Board extends JPanel{
 
 	//패널 전체 검사 후 스텍에 저장 -> 저장된 오브젝트의 이미지 변경
 	public int Check(){
-		GameObject checkedObject[] = new GameObject[ROW*COL];
+		GameObject checkedObject[] = new GameObject[ROW*COL*2];
 		int checkNum = 0, pointer, counter = 0;
 		
 		//horizon check
@@ -134,12 +132,9 @@ class Game_Board extends JPanel{
 			}
 		}//end of vertical
 
-		//label update
-		if(upper != null)
-		{
-			upper.game_info.plus_game_score(checkNum * 10);
-			upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
-		}
+		//label update - get Point
+		upper.game_info.plus_game_score(checkNum * 10);
+		upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
 		
 		//change
 		for(int i = checkNum-1 ; i >= 0; i--){
@@ -151,10 +146,14 @@ class Game_Board extends JPanel{
 	}
 	
 	void ReplaceObject(int row, int col, int imgNum, String type){
+		if(isItStart == true)
+			gameObject[row][col].getPosition();
 		this.remove(gameObject[row][col]);
 		gameObject[row][col] = CreateObject(row, col, type);
 		this.add(gameObject[row][col], row*COL + col);
 		gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, imgNum);
+
+		System.gc();
 	}
 	
 	GameObject CreateObject(int row, int col, String type){
@@ -167,40 +166,43 @@ class Game_Board extends JPanel{
 			return new RemoveVerticalLine(row, col, this);
 		case "RemoveHorizon":
 			return new RemoveHorizon(row, col, this);
+		case "CountUp":
+			return new CountUp(row, col, this);
 		}
 		return null;
 	}
-	
 	/**************/
-	//아이템 
-	public void itemAllreset()// 전체 리셋 아이템
-	{
-		for(int row = 0; row < ROW; row++){
-			for(int col = 0; col < COL; col++){
-				gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-						random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
-			}
-		}
-		while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
-		
-	}
-	public void itemChangeOne()
-	{
-		int ran_row = random.nextInt(8);
-		System.out.println(ran_row);
-		int ran_col = random.nextInt(6);
-		System.out.println(ran_col);
-		gameObject[ran_row][ran_col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-				random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
-	}
-	public void itemRemoveOne()
-	{
-						
-	}
-	public void itemChange_CountUp()
-	{
-		
-	}
-	
-	/*****************/
+	   //아이템 
+	   public void itemAllreset()// 전체 리셋 아이템
+	   {
+	      for(int row = 0; row < ROW; row++){
+	         for(int col = 0; col < COL; col++){
+	            gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+	                  random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+	         }
+	      }
+	      while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
+	      
+	   }
+	   public void itemChangeOne()
+	   {
+	      int ran_row = random.nextInt(8);
+	      System.out.println(ran_row);
+	      int ran_col = random.nextInt(6);
+	      System.out.println(ran_col);
+	      gameObject[ran_row][ran_col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+	            random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+	   }
+	   public void itemRemoveOne()
+	   {
+	      //GameObject_Click g_click;
+	      //MyActionLitener litener;
+	      //g_click.addActionListener(litener);
+	   }
+	   public void itemChange_CountUp()
+	   {
+	      
+	   }
+	   
+	   /*****************/
 }

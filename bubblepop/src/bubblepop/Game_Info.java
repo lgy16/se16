@@ -4,15 +4,15 @@ public class Game_Info {
 	
 	private String game_level;
 	private int game_score;
-	static int move_count;
+	int move_count;
 	
 	public Game_Info(String level)
 	{
 		game_level = level;
 		game_score = 0;
-		if(level == "상") move_count = 5;
-		else if(level == "중") move_count = 40;
-		else if(level == "하") move_count = 50;
+		if(level == "상") move_count = 20;
+		else if(level == "중") move_count = 30;
+		else if(level == "하") move_count = 40;
 	}
 	
 	public String get_game_level()
@@ -50,6 +50,11 @@ public class Game_Info {
 	public void set_move_count(int count)
 	{
 		move_count = count;
+	}
+	
+	public void plus_move_count(int move)
+	{
+		move_count += move;
 	}
 	
 	public void minus_move_count(int move)
