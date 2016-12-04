@@ -170,8 +170,8 @@ class Game_Board extends JPanel{
 	}
 	
 	void ReplaceObject(int row, int col, int imgNum, String type){
-		if(isItStart == true)
-			gameObject[row][col].getPosition();
+		//if(isItStart == true)
+			//gameObject[row][col].getPosition();
 		this.remove(gameObject[row][col]);
 		gameObject[row][col] = CreateObject(row, col, type);
 		this.add(gameObject[row][col], row*COL + col);
