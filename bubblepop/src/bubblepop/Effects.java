@@ -39,8 +39,8 @@ public class Effects extends javax.swing.JFrame{
 		
 		for(int i=0; i<count; i++)
 		{
-			Effects.x=ob_location[i*2];
-			Effects.y=ob_location[i*2+1];
+			Effects.x=ob_location[i*2]-10;
+			Effects.y=ob_location[i*2+1]-10;
 			
 			p_effect[i] = new PopEffect();
 			p_effect[i].setBounds(x, y, 80, 80);

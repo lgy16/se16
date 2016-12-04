@@ -26,12 +26,13 @@ public class PopEffect extends javax.swing.JFrame{
 	            imageLabel.setIcon(ii);
 	            contentPane.add(imageLabel, java.awt.BorderLayout.CENTER);
 	            // show it
-	            this.setLocationRelativeTo(null);
 	            this.setVisible(true);
 	        } catch (Exception exception) {
 	            exception.printStackTrace();
 	        }
-	    }
+	    }	
+	    
+	    //public pop_obj
 
 	    public static void main(String[] args) {
 	        new PopEffect();
