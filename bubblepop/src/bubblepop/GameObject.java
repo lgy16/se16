@@ -10,8 +10,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import bubblepop.RemoveSame.MyActionLitener;
-
 //import bubblepop.GameObject.MyActionLitener;
 
 class GameObject extends JButton{
@@ -28,8 +26,14 @@ class GameObject extends JButton{
 	   this.addActionListener(litener);
 	}
 	
-	void getPosition(){
+	double[] getPosition(){
 		System.out.println(this.getLocationOnScreen().getX() + "/" + this.getLocationOnScreen().getY());
+		
+		double[] ob_location_info = new double[2];
+		ob_location_info[0] = this.getLocationOnScreen().getX();
+		ob_location_info[1] = this.getLocationOnScreen().getY();
+		
+		return ob_location_info;
 	}
    
 	//이미지 주소 불러오기

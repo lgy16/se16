@@ -22,9 +22,14 @@ class Game_Board extends JPanel{
 	
 	public static Game_Board j_p;
 	public static Game_Info g_i;
+	
+	public static int pop_count;
+	public static int[] obj_location;
 	   
     public Game_Board()
-    {}
+    {
+    	
+    }
 	   
     public Game_Board(int width, int height) {
        this.width = width;
@@ -136,10 +141,29 @@ class Game_Board extends JPanel{
 		upper.game_info.plus_game_score(checkNum * 10);
 		upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
 		
+		pop_count = checkNum;
+		obj_location = new int[2*checkNum];		
+		
+		double[] temp = new double[2];
+		
 		//change
 		for(int i = checkNum-1 ; i >= 0; i--){
 			int r = checkedObject[i].ROW, c = checkedObject[i].COL;
+			if(isItStart == true)
+			{
+				temp=gameObject[r][c].getPosition();
+				obj_location[2*i]=(int)temp[0];
+				obj_location[2*i + 1]=(int)temp[1];
+				
+				System.out.println(obj_location[2*i] + " " + obj_location[(2*i)+1]);
+				
+			}
 			ReplaceObject(r, c, random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR, "GameObject");
+		}
+		
+		if(isItStart == true)
+		{
+			Effects.main(null);
 		}
 		
 		return checkNum;
