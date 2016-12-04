@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 class Game_Board extends JPanel{
 	protected Game upper;
 	private final int width, height;
-	private final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
-	private Random random = new Random();
-	private Calendar oCalendar = Calendar.getInstance( );
+	final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
+	Random random = new Random();
+	Calendar oCalendar = Calendar.getInstance( );
 	private GridLayout gridLayout = new GridLayout(ROW, COL, GAP, GAP);
 	
 	GameObject gameObject[][] = new GameObject[ROW][COL];
@@ -109,13 +109,26 @@ class Game_Board extends JPanel{
 		//change
 		for(int i = checkNum-1 ; i >= 0; i--){
 			int r = checkedObject[i].ROW, c = checkedObject[i].COL;
-			this.remove(gameObject[r][c]);//remove
-			gameObject[r][c] = new GameObject(r, c, this);
-			this.add(gameObject[r][c], r*COL + c);
-			gameObject[r][c].setImage(width/COL - GAP*2, height/ROW - GAP*2,
-					random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+			ReplaceObject(r, c, random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR, "GameObject");
 		}
 		
 		return checkNum;
+	}
+	
+	void ReplaceObject(int row, int col, int imgNum, String type){
+		this.remove(gameObject[row][col]);
+		gameObject[row][col] = CreateObject(row, col, type);
+		this.add(gameObject[row][col], row*COL + col);
+		gameObject[row][col].setImage(width/COL - GAP*2, height/ROW - GAP*2, imgNum);
+	}
+	
+	GameObject CreateObject(int row, int col, String type){
+		switch(type){
+		case "GameObject":
+			return new GameObject(row, col, this);
+		case "RemoveSame":
+			return new RemoveSame(row, col, this);
+		}
+		return null;
 	}
 }

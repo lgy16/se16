@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -15,12 +16,14 @@ class GameObject extends JButton{
 	Game_Board upper;
 	final int ROW, COL;
 	public int imgNum;
+	MyActionLitener litener;
    
 	public GameObject(int row, int col, Game_Board upper){
 	   this.upper = upper;
 	   this.ROW = row;
 	   this.COL = col;
-	   this.addActionListener(new MyActionLitener());
+	   litener = new MyActionLitener();
+	   this.addActionListener(litener);
 	}
    
 	//이미지 주소 불러오기
@@ -55,7 +58,22 @@ class GameObject extends JButton{
 				return "img/selected_diamond.png";
 		   case 5:
 				return "img/selected_hexagon.png";
-		   }		   
+		   }
+	   case "RemoveSame":
+		   switch(imgNum){
+			case 0:
+				return "img/RemoveSame_circle.png";
+			case 1:
+				return "img/RemoveSame_triangle.png";
+			case 2:
+				return "img/RemoveSame_square.png";
+			case 3:
+				return "img/RemoveSame_star.png";
+			case 4:
+				return "img/RemoveSame_diamond.png";
+			case 5:
+				return "img/RemoveSame_hexagon.png";
+			}
 		}
 		return "Fail";
 	}
@@ -107,7 +125,9 @@ class GameObject extends JButton{
 		}
 		Game_Board.selectedObject = null;
 		
-		while(upper.Check() > 0);
+		while(upper.Check() > 0){
+			upper.ReplaceObject(ROW, COL, imgNum, "RemoveSame");
+		};
 		
 		if(upper.upper.game_info.get_move_count() <= 0){
 			upper.upper.Exit_Game();
@@ -115,7 +135,7 @@ class GameObject extends JButton{
 	}
    
 	//버튼 클릭 이벤트
-	private class MyActionLitener implements ActionListener{
+	class MyActionLitener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(upper.upper.game_info.get_move_count() > 0){
 				if(Game_Board.selectedObject == null){
@@ -125,7 +145,7 @@ class GameObject extends JButton{
 				else{
 					moveObject();
 				}
-			}			
+			}	
 		}
 	}
 }
@@ -144,26 +164,56 @@ class GameObject_Click extends GameObject{
 class RemoveSame extends GameObject_Click{
 	public RemoveSame(int row, int col, Game_Board upper){
 		super(row, col, upper);
+		this.removeActionListener(litener);
+		litener = new MyActionLitener();
+		this.addActionListener(litener);
 	}
-	class MyActionLitener implements ActionListener{
+	
+	@Override
+	public void setImage(int width, int height, int imgNum){
+		this.imgNum = imgNum;
+		try {
+			Image img = ImageIO.read(getClass().getResource(selectImage("RemoveSame", imgNum)));
+			this.setIcon(new ImageIcon(img.getScaledInstance(width,height,Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	void Sound(){
+		upper.upper.sound.startSound("explode");
+	}
+
+
+	class MyActionLitener extends GameObject_Click.MyActionLitener{
 		public void actionPerformed(ActionEvent e){
 			if(Game_Board.selectedObject == null){
-				int count = 0;
 				Sound();
-				for(int row = 0; row < ROW; row++){
-					for(int col = 0; col < COL; col++){
+				
+				int count = 0;
+				for(int row = 0; row < upper.ROW; row++){
+					for(int col = 0; col < upper.COL; col++){
 						if(imgNum == upper.gameObject[row][col].imgNum){
 							count++;
-							if(row != ROW && col != COL){
+							if(row != ROW || col != COL){
 								System.out.println(row + "/" + col);
+								upper.ReplaceObject(row, col, upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND))%upper.MODULAR, "GameObject");
 							}
 						}
 					}
 				}
+				upper.ReplaceObject(ROW, COL, upper.random.nextInt(upper.oCalendar.get(Calendar.SECOND)*upper.oCalendar.get(Calendar.MILLISECOND))%upper.MODULAR, "GameObject");
+				upper.upper.game_info.plus_game_score(count * 10);
+				upper.upper.scoreLabel.setText(String.valueOf(upper.upper.game_info.get_game_score()));
 			}
 			else{
-				moveObject();
+				GameObject selected = Game_Board.selectedObject;
+				selected.setImage(selected.getIcon().getIconWidth(), selected.getIcon().getIconHeight(), selected.imgNum);
+				upper.upper.sound.startSound("click_error");
+				Game_Board.selectedObject = null;
 			}
+			return;
 		}
 	}
 }

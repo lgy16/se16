@@ -11,9 +11,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 class Sound {
-	java.net.URL /*url,*/ bgmURL, moveSoundURL, cantMoveSoundURL, selectButtonSoundURL, clickItemSoundURL;
-	File /*file,*/ bgmFile, moveSoundFile, cantMoveSoundFile, selectButtonSoundFile, clickItemSoundFile;
-	Clip /*clip,*/ bgmClip, moveSoundClip, cantMoveSoundClip, selectuButtonClip, clickItemSoundClip;
+	java.net.URL /*url,*/ bgmURL, moveSoundURL, cantMoveSoundURL, selectButtonSoundURL, clickItemSoundURL, explodeSoundURL;
+	File /*file,*/ bgmFile, moveSoundFile, cantMoveSoundFile, selectButtonSoundFile, clickItemSoundFile, explodeSoundFile;
+	Clip /*clip,*/ bgmClip, moveSoundClip, cantMoveSoundClip, selectuButtonClip, clickItemSoundClip, explodeSoundClip;
 
 	public Sound(){
 		bgmURL = getClass().getResource("sound/Smario.wav");
@@ -24,8 +24,10 @@ class Sound {
 		cantMoveSoundFile = new File(cantMoveSoundURL.getPath());
 		selectButtonSoundURL = getClass().getResource("sound/Coin.wav");
 		selectButtonSoundFile = new File(selectButtonSoundURL.getPath());
-		clickItemSoundURL = getClass().getResource("sound/Coin.wav");
+		clickItemSoundURL = getClass().getResource("sound/Click_Item.wav");
 		clickItemSoundFile = new File(clickItemSoundURL.getPath());
+		explodeSoundURL = getClass().getResource("sound/explode.wav");
+		explodeSoundFile = new File(explodeSoundURL.getPath());
 		
 		
 		try {
@@ -75,6 +77,15 @@ class Sound {
 						clickItemSoundClip.close();
 				}
 			});
+			explodeSoundClip = AudioSystem.getClip();
+			explodeSoundClip.addLineListener(new LineListener() {
+				@Override
+				public void update(LineEvent event) {
+					//CLOSE, OPEN, START, STOP
+					if(event.getType() == LineEvent.Type.STOP)
+						explodeSoundClip.close();
+				}
+			});
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -104,6 +115,10 @@ class Sound {
 				clickItemSoundClip.open(AudioSystem.getAudioInputStream(clickItemSoundFile));
 				clickItemSoundClip.start();
 				break;
+			case "explode":
+				explodeSoundClip.open(AudioSystem.getAudioInputStream(explodeSoundFile));
+				explodeSoundClip.start();
+				break;
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -125,5 +140,8 @@ class Sound {
 		
 		clickItemSoundClip.stop();
 		clickItemSoundClip.close();
+		
+		explodeSoundClip.stop();
+		explodeSoundClip.close();
 	}
 }
