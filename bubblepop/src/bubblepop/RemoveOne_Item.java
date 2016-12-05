@@ -28,8 +28,10 @@ public class RemoveOne_Item extends Item
 	
 	public void item_use()
 	{
-		System.out.println(game_info.get_game_score());
-		game_info.set_game_score(game_info.get_game_score()+10);
+		
+		j_p.itemRemoveOne();
+		
+		while(j_p.Check()>0);
 		System.out.println("RemoveOne_Item_use");
 	}
 }

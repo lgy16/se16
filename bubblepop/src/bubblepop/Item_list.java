@@ -15,7 +15,7 @@ class Item_list
 		item_list[0] = new RemoveOne_Item();
 		item_list[1] = new AllReset_Item();
 		item_list[2] = new ChangeOne_Item();
-		item_list[3] = new AllUseItemObject_Item();
+		item_list[3] = new Boom_Item();
 		item_list[4] = new MoveCount3Add_Item();
 	
 		for(int i=0; i<how_many_items; i++)

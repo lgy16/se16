@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 class Game_Board extends JPanel{
 	protected Game upper;
-	private int width, height;
+	private int width=0, height=0;
 	final int ROW = 8, COL = 6, GAP = 5, MODULAR = 6;
 	Random random = new Random();
 	Calendar oCalendar = Calendar.getInstance( );
@@ -60,6 +60,7 @@ class Game_Board extends JPanel{
 		this.setBackground(new Color(219,231,251));
 		this.setLayout(new GridLayout(ROW, COL, GAP, GAP));
 		upper.sound.startSound("bgm");
+		j_p = this;
 		
 		//Create GameObject
 		for(int row = 0; row < ROW; row++){
@@ -143,8 +144,11 @@ class Game_Board extends JPanel{
 		}//end of vertical
 
 		//label update - get Point
-		upper.game_info.plus_game_score(checkNum * 10);
-		upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
+		if(upper != null)
+		{
+			upper.game_info.plus_game_score(checkNum * 10);
+			upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
+		}
 		
 		pop_count = checkNum;
 		obj_location = new int[2*checkNum];		
@@ -215,22 +219,46 @@ class Game_Board extends JPanel{
 	   }
 	   public void itemChangeOne()
 	   {
-	      int ran_row = random.nextInt(8);
-	      System.out.println(ran_row);
-	      int ran_col = random.nextInt(6);
-	      System.out.println(ran_col);
-	      gameObject[ran_row][ran_col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
-	            random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+		   int ran_row = random.nextInt(8);
+			int ran_col = random.nextInt(6);
+			gameObject[ran_row][ran_col].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+					random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+			upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
 	   }
 	   public void itemRemoveOne()
 	   {
-	      //GameObject_Click g_click;
-	      //MyActionLitener litener;
-	      //g_click.addActionListener(litener);
+		   int rand = random.nextInt(6);
+			int pulscnt=0;
+			for(int i = 0; i< ROW ; i++)
+			{
+				for(int j = 0; j< COL ; j++)
+				{
+					if(gameObject[i][j].imgNum == rand)
+					{
+						gameObject[i][j].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+								random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+						pulscnt++;
+					}
+				}
+			}
+			upper.game_info.plus_game_score(pulscnt*10);
+			upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
 	   }
-	   public void itemChange_CountUp()
+	   public void itemBoom()
 	   {
-	      
+		   int ran_row = random.nextInt(6);
+			int ran_col = random.nextInt(4);
+			for(int i = 0; i< ran_row+3 ; i++)
+			{
+				for(int j = 0; j< ran_col+3 ; j++)
+				{
+					gameObject[i][j].setImage(width/COL - GAP*2, height/ROW - GAP*2, 
+							random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
+					
+				}
+			}
+			upper.game_info.plus_game_score(90);
+			upper.scoreLabel.setText(String.valueOf(upper.game_info.get_game_score()));
 	   }   
 	   
 		public void sleep(int time){
