@@ -38,7 +38,7 @@ public class TutorialMain extends JFrame {
 		splitPane.setLeftComponent(imLabel);
 		imLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		JLabel jLabel = new JLabel("<html>1.난이도 상,중,하 중 하나를 선택하세요.<BR>2.각각 30,40,50 번의 이동횟수가 제한됩니다."
+		JLabel jLabel = new JLabel("<html>1.난이도 상,중,하 중 하나를 선택하세요.<BR>2.각각 20,30,40 번의 이동횟수가 제한됩니다."
 				+ "<BR>3.'다음'버튼을 누르면 아이템 선택화면으로 넘어갑니다.<BR>4.'랭킹'버튼을 누르면 난이도별 랭킹현황을 볼수있습니다.");
 		jLabel.setFont(new Font("굴림", Font.PLAIN, 19));
 		splitPane.setRightComponent(jLabel);
