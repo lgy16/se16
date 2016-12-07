@@ -239,7 +239,7 @@ public class Game extends javax.swing.JFrame {
 		        	ex_items[0].item_use();
 		        	//나중에 다시못쓰는 코드 추가할 것
 		        	movecntLabel.setText(String.valueOf(game_info.get_move_count()));
-		        	//ex_item_buttons[0].setVisible(false);
+		        	ex_item_buttons[0].setVisible(false);
 		        }
 		    });
 		    
@@ -249,7 +249,7 @@ public class Game extends javax.swing.JFrame {
 			        public void actionPerformed(java.awt.event.ActionEvent evt) {
 			        	ex_items[1].item_use();
 			        	movecntLabel.setText(String.valueOf(game_info.get_move_count()));
-			        	//ex_item_buttons[1].setVisible(false);
+			        	ex_item_buttons[1].setVisible(false);
 			        }
 			    });
 			    
@@ -259,7 +259,7 @@ public class Game extends javax.swing.JFrame {
 			    		public void actionPerformed(java.awt.event.ActionEvent evt) {
 			    			ex_items[2].item_use();
 			    			movecntLabel.setText(String.valueOf(game_info.get_move_count()));
-			    			//ex_item_buttons[2].setVisible(false);
+			    			ex_item_buttons[2].setVisible(false);
 			    		}
 			    	});
 			    	
@@ -269,7 +269,7 @@ public class Game extends javax.swing.JFrame {
 				    		public void actionPerformed(java.awt.event.ActionEvent evt) {
 				    			ex_items[3].item_use();
 				    			movecntLabel.setText(String.valueOf(game_info.get_move_count()));
-				    			//ex_item_buttons[3].setVisible(false);
+				    			ex_item_buttons[3].setVisible(false);
 				    		}
 				    	});
 			    		
@@ -279,7 +279,7 @@ public class Game extends javax.swing.JFrame {
 					    		public void actionPerformed(java.awt.event.ActionEvent evt) {
 					    			ex_items[4].item_use();
 					    			movecntLabel.setText(String.valueOf(game_info.get_move_count()));
-					    			//ex_item_buttons[4].setVisible(false);
+					    			ex_item_buttons[4].setVisible(false);
 					    		}
 					    	});
 			    		}

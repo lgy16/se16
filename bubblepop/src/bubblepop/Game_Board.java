@@ -25,7 +25,7 @@ class Game_Board extends JPanel{
 	
 	public static int pop_count;
 	public static int[] obj_location;
-	   
+
     public Game_Board()
     {
     	
@@ -71,13 +71,15 @@ class Game_Board extends JPanel{
 						random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR);
 			}
 		}
-		//while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
+		while(this.Check() > 0);//터지는게 없을 때까지 반복 체크
 		while(true)
 		{
 			if(this.Check() <= 0) break;
 			sleep(2000);
 		}
+		upper.game_info.set_game_score(0);
 		isItStart = true;
+		
 	}
 	
 	@Override //패널 크기 지정
@@ -151,24 +153,32 @@ class Game_Board extends JPanel{
 		}
 		
 		pop_count = checkNum;
-		obj_location = new int[2*checkNum];		
+		obj_location = new int[2*checkNum];		// 이게 터지는 위치고
 		
 		double[] temp = new double[2];
 		
 		//change
-		for(int i = checkNum-1 ; i >= 0; i--){
+		for(int i = checkNum-1 ; i >= 0; i--){			
 			int r = checkedObject[i].ROW, c = checkedObject[i].COL;
+			
 			if(isItStart == true)
 			{
+				
 				temp=gameObject[r][c].getPosition();
 				obj_location[2*i]=(int)temp[0];
 				obj_location[2*i + 1]=(int)temp[1];
 				
-				System.out.println(obj_location[2*i] + " " + obj_location[(2*i)+1]);
+				//System.out.println(obj_location[2*i] + " " + obj_location[(2*i)+1]);
+				System.out.println("temp =" +temp);
 				
+				System.out.println(" temp0"+obj_location[2*i] + " temp1" + obj_location[(2*i)+1]);
+				//ReplaceObject(r, c, random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR, "GameObject");						
 			}
+		
 			ReplaceObject(r, c, random.nextInt(oCalendar.get(Calendar.SECOND)*oCalendar.get(Calendar.MILLISECOND))%MODULAR, "GameObject");
 		}
+		
+		Effects.main(null);		
 		
 		if(isItStart == true)
 		{

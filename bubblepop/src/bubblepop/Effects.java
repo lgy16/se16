@@ -1,10 +1,14 @@
 package bubblepop;
 
-import javax.swing.ImageIcon;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 public class Effects extends JComponent implements Runnable 
 {
@@ -15,6 +19,9 @@ public class Effects extends JComponent implements Runnable
 	private static int x;
 	private static int y;
 	private Boolean is_stop;
+	public Game_Board g_bb;
+	
+	public JFrame frmEffiect = null; 
 	
 	public Effects()
 	{
@@ -78,6 +85,8 @@ public class Effects extends JComponent implements Runnable
 	            }
 	        }
 	    } catch (Exception e) {
+	    } finally {
+	    	frmEffiect.dispose();		// remove jframe
 	    }
 	}
 	
@@ -107,15 +116,17 @@ public class Effects extends JComponent implements Runnable
 			p_effect[i].setUndecorated(true);
 			p_effect[i].setBackground(new Color(0,0,0,0));
 			p_effect[i].setVisible(true);
+			
+			app[i].frmEffiect = p_effect[i];	// add effect
 		}
   
 		for(i=0; i < count; i++)
 		{
 			(new Thread(app[i])).start();  	
-		        	    
+    	    
 			p_effect[i].addWindowListener(new WindowAdapter() {
 			    @Override
-			    public void windowClosing(WindowEvent e) {	
+			    public void windowClosing(WindowEvent e) {
 			    	System.exit(0);
 			    }			    
 		});

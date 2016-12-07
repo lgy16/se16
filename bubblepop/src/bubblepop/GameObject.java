@@ -156,7 +156,7 @@ class GameObject extends JButton{
 		
 		if((selected.ROW == N && selected.COL == this.COL) || (selected.ROW == S && selected.COL == this.COL) 
 				|| (selected.ROW == this.ROW && selected.COL == W) || (selected.ROW == this.ROW && selected.COL == E)){
-			//int tmp = imgNum;
+		
 			int this_ROW = this.ROW, this_COL = this.COL, selected_imgNum = Game_Board.selectedObject.imgNum;
 			
 			//move에서 선택된 것 -> select된 곳으로 이동
